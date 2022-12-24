@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/order_id"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="Today"
+        android:textSize="16sp"
+        android:textColor="@color/blue"
+        android:singleLine="true"
+        android:fontFamily="@font/semibold_mont"
+        />
+
+ <TextView
+     android:layout_below="@+id/order_id"
+        android:id="@+id/order_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Today"
+        android:textSize="16sp"
+        android:textColor="@color/grey"
+        android:fontFamily="@font/semibold_mont"
+        />
+
+
+    <TextView
+        android:id="@+id/order_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go To Details"
+        android:textSize="16sp"
+        android:textColor="@color/blue"
+        android:fontFamily="@font/semibold_mont"
+         android:layout_alignParentRight="true"
+        />
+    <View
+        android:id="@+id/view1"
+        android:layout_below="@+id/order_date"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+
+        android:background="@drawable/lineback"
+        />
+
+
+
+    <TextView
+        android:id="@+id/userDetailstxt"
+        android:layout_below="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Details"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/semibold_mont"/>
+    <TextView
+        android:id="@+id/name"
+        android:layout_below="@+id/userDetailstxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Priyanka kar"
+        android:textColor="@color/grey"/>
+
+
+<TextView
+        android:id="@+id/address"
+        android:layout_below="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    android:textColor="@color/grey"
+        android:text="badal nikatan,kestopur,rabindrapally"/>
+
+
+<TextView
+        android:id="@+id/phone_number"
+        android:layout_below="@+id/address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="8017378426"/>
+    <TextView
+        android:id="@+id/mode_of_payment"
+        android:layout_below="@+id/phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mode Of Payment"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/semibold_mont"/>
+
+<TextView
+        android:id="@+id/totalpayable"
+        android:layout_below="@+id/mode_of_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total Payable : "
+        android:layout_marginTop="5dp"
+        android:textColor="@color/red"
+        android:fontFamily="@font/semibold_mont"/>
+
+
+
+    <TextView
+        android:id="@+id/productdetailstxt"
+        android:layout_below="@+id/totalpayable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Details"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        android:fontFamily="@font/semibold_mont"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/rec_orders"
+        android:layout_below="@+id/productdetailstxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <View
+        android:id="@+id/view2"
+        android:layout_below="@+id/rec_orders"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey"/>
+
+
+</RelativeLayout>

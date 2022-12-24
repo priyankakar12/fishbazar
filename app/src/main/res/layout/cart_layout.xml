@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tengra Curry Cut - With Head"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/medium_mont"/>
+
+    <ImageView
+        android:id="@+id/img_delete"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/delete_fill"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#979797"
+        android:textSize="15sp"
+        android:text="500 gm"
+        android:fontFamily="@font/medium_mont"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/mrp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\u20B9 350"
+        android:textSize="16sp"
+        android:textColor="#979797"
+        android:fontFamily="@font/medium_mont"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/img_delete"/>
+    <TextView
+        android:id="@+id/currencyicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium_mont"
+        android:layout_below="@id/img_delete"
+        android:text="@string/currency_icon"
+        android:layout_toLeftOf="@+id/price"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_below="@+id/mrp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/semibold_mont"
+        android:layout_alignParentRight="true"
+        android:text="\u20B9 300"/>
+
+    <RelativeLayout
+        android:id="@+id/quantity_layout"
+        android:layout_width="95dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/img_delete"
+        android:layout_toLeftOf="@+id/currencyicon"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/redbox">
+
+        <RelativeLayout
+            android:id="@+id/ll_minus"
+            android:layout_toLeftOf="@+id/ll_qty"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/minus" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/ll_qty"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ll_add"
+            android:layout_toRightOf="@+id/ll_qty"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/plus" />
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCCCC"
+        android:layout_below="@id/price"
+        android:layout_marginTop="18dp"/>
+
+
+
+</RelativeLayout>

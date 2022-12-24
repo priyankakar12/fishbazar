@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
+    android:focusable="false"
+    android:focusableInTouchMode="true"
+    android:id="@+id/main_ll"
+    tools:context=".OtpVerifyActivity">
+    <RelativeLayout
+        android:id="@+id/upper_layer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+        <RelativeLayout
+            android:id="@+id/logo_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/fish_logo_bg">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingBottom="10dp"
+                android:src="@drawable/fishlogo" />
+
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/mid_ll"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <TextView
+            android:id="@+id/login_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold_mont"
+            android:text="Enter Code"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/please_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_txt"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/regular_mont"
+            android:text="We have sent you an OTP on your mobile number with 4 digit verification code."
+            android:textColor="@color/lightgrey"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:id="@+id/phone_number_ll"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@+id/please_sign_in"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+                <EditText
+
+                    android:id="@+id/editTxt1"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:maxLength="1"
+                    android:inputType="number"
+                    android:textCursorDrawable="@drawable/black_cursor"
+                    android:textAlignment="center"
+                    />
+                 <EditText
+                     android:id="@+id/editTxt2"
+                     android:maxLength="1"
+                     android:layout_width="0dp"
+                     android:layout_height="70dp"
+                    android:layout_weight="1"
+                     android:textAlignment="center"
+                     android:textCursorDrawable="@drawable/black_cursor"
+                     android:inputType="number"/>
+                 <EditText
+                     android:id="@+id/editTxt3"
+                     android:inputType="number"
+                     android:layout_width="0dp"
+                     android:layout_height="70dp"
+                     android:textAlignment="center"
+                     android:textCursorDrawable="@drawable/black_cursor"
+                     android:layout_weight="1"/>
+                 <EditText
+                     android:id="@+id/editTxt4"
+                     android:maxLength="1"
+                     android:layout_width="0dp"
+                     android:layout_height="70dp"
+                     android:textCursorDrawable="@drawable/black_cursor"
+                    android:layout_weight="1"
+                     android:inputType="number"
+                     android:textAlignment="center"/>
+                 <EditText
+                     android:visibility="gone"
+                    android:layout_width="0dp"
+                     android:layout_height="70dp"
+                    android:layout_weight="1"
+                     android:maxLength="1"
+                     android:inputType="number"
+                     android:textAlignment="center"/>
+
+
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/submit_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/phone_number_ll"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/submit_button">
+
+            <TextView
+                android:id="@+id/submit_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/medium_mont"
+                android:text="SUBMIT"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            <ProgressBar
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/progress_circular"
+                android:layout_centerInParent="true"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/donthav_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/submit_ll"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/medium_mont"
+            android:text="Did not receive the code?"
+            android:textAlignment="center"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/donthav_txt"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/semibold_mont"
+            android:text="Resend Otp"
+            android:textAlignment="center"
+            android:textColor="@color/lighblue"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
