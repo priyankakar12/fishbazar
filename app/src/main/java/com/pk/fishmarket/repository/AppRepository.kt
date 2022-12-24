@@ -59,11 +59,14 @@ class AppRepository {
         fun orderHistory(userid: String) =
         RetrofitClient.apiInterface.orderHistory(userid)
 
-     fun orderDetails(userid: String,Orderid:String) =
+        fun orderDetails(userid: String,Orderid:String) =
         RetrofitClient.apiInterface.orderDetails(userid,Orderid)
 
-fun cancelOrder(userid: String,Orderid:String) =
+        fun cancelOrder(userid: String,Orderid:String) =
         RetrofitClient.apiInterface.cancelOrder(userid,Orderid)
+
+        fun getUserDetails(userid: String) =
+        RetrofitClient.apiInterface.getUserDetails(userid)
 
 
 }

@@ -127,6 +127,15 @@ class OrderDetailsActivity : AppCompatActivity() {
                                 val df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                                 val formattedDate: String = df.format(c)
                                 var deliveryDate = response.body()!!.ORDER_DETAILS[0].DELIVARY_DATE
+                                var orderStatus = response.body()!!.ORDER_DETAILS[0].ORDER_STATUS
+                                if(orderStatus == "CANCEL")
+                                {
+                                    submit_ll.visibility = View.GONE
+                                }
+                                else
+                                {
+                                    submit_ll.visibility = View.VISIBLE
+                                }
                                 if(deliveryDate == formattedDate)
                                 {
                                     submit_ll.visibility = View.VISIBLE

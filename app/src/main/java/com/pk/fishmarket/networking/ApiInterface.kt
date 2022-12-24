@@ -1,6 +1,7 @@
 package com.pk.fishmarket.networking
 
 import com.pk.fishmarket.ResponseModel.*
+import com.pk.fishmarket.ResponseModel.UserDetails.UserDetailResponseModel
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.Field
@@ -190,8 +191,6 @@ interface ApiInterface {
 
     ): Single<Response<OrderDetailsResponseSucccessModel>>
 
-
-
     @FormUrlEncoded
     @POST("Shop_user/order_cancel")
     fun cancelOrder(
@@ -200,6 +199,14 @@ interface ApiInterface {
         @Field("Orderid") Orderid: String
 
     ): Single<Response<CartUpdateResponseModel>>
+
+    @FormUrlEncoded
+    @POST("Shop_user/getprofiledetails")
+    fun getUserDetails(
+
+        @Field("userid") userid: String
+
+    ): Single<Response<UserDetailResponseModel>>
 
 
 

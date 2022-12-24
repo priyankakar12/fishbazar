@@ -85,14 +85,18 @@ class ViewModelFactory(private val appRepository: AppRepository) : ViewModelProv
         {
             return OrderHistoryViewModel(appRepository) as T
         }
-if (modelClass.isAssignableFrom(OrderDetailsViewModel::class.java))
+        if (modelClass.isAssignableFrom(OrderDetailsViewModel::class.java))
         {
             return OrderDetailsViewModel(appRepository) as T
         }
 
-if (modelClass.isAssignableFrom(OrderCancelViewModel::class.java))
+        if (modelClass.isAssignableFrom(OrderCancelViewModel::class.java))
         {
             return OrderCancelViewModel(appRepository) as T
+        }
+        if (modelClass.isAssignableFrom(UserDetailsViewModel::class.java))
+        {
+            return UserDetailsViewModel(appRepository) as T
         }
 
 
