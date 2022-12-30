@@ -1,14 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".dashboard.ui.FavouritesItemsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <RelativeLayout
+        android:id="@+id/upper_layer"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp">
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/back_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/backoval">
 
-</FrameLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/backicon" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/bold_mont"
+            android:text="Your Favourite Shops"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/cart_ll"
+                android:src="@drawable/notificationimg"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/cart_ll"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/blue_oval">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/cart_img" />
+                <RelativeLayout
+                    android:id="@+id/cart_count"
+                    android:layout_width="18dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone"
+                    android:background="@drawable/cart_count_drawable">
+
+                    <TextView
+                        android:id="@+id/tv_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/upper_layer"
+        android:layout_marginTop="10dp"
+        android:background="#B3979797"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/selection_ll"
+        android:layout_below="@id/view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_margin="10dp">
+        <LinearLayout
+            android:id="@+id/currentOrderLL"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/curTxt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Current Order"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pastOrderLL"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/pastTxt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Past Order"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_favouriteHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selection_ll"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp" />
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/noData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Oops!!! No Shops Found"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/red"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+
+</RelativeLayout>

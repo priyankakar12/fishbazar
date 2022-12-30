@@ -68,5 +68,18 @@ class AppRepository {
         fun getUserDetails(userid: String) =
         RetrofitClient.apiInterface.getUserDetails(userid)
 
+        fun getUserProfileUpdate(email_address:String,fullname:String,userid: String) =
+        RetrofitClient.apiInterface.getUserProfileUpdate(email_address,fullname,userid)
+
+         fun getFavourites(userid: String) =
+        RetrofitClient.apiInterface.getFavourites(userid)
+
+         fun deleteFavourites(userid:String,shopid:String) =
+        RetrofitClient.apiInterface.deleteFavourites(userid,shopid)
+
+
+
+
+
 
 }

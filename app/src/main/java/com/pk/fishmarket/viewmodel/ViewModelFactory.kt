@@ -98,6 +98,18 @@ class ViewModelFactory(private val appRepository: AppRepository) : ViewModelProv
         {
             return UserDetailsViewModel(appRepository) as T
         }
+         if (modelClass.isAssignableFrom(ProfileUpdateViewModel::class.java))
+        {
+            return ProfileUpdateViewModel(appRepository) as T
+        }
+        if (modelClass.isAssignableFrom(FavouritesViewModel::class.java))
+        {
+            return FavouritesViewModel(appRepository) as T
+        }
+        if (modelClass.isAssignableFrom(DeleteFavouritesViewModel::class.java))
+        {
+            return DeleteFavouritesViewModel(appRepository) as T
+        }
 
 
         throw IllegalArgumentException("Unknown class name")

@@ -82,7 +82,7 @@
                 android:fontFamily="@font/regular_mont"
                 android:hint="Phone Number"
                 android:inputType="number"
-                android:text="9830459860"
+                android:text="9674135456"
                 android:textColor="@color/lightgrey"
                 android:textColorHint="@color/whitegrey"
                 android:layout_toLeftOf="@+id/rl_phone"

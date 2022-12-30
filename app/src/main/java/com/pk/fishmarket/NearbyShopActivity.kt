@@ -228,6 +228,7 @@ class NearbyShopActivity : AppCompatActivity(),AddToCartInterface {
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
 
+                                favourites_icon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.favourites_selected));
 
                                 Toast.makeText(this, "Favourites have been updated", Toast.LENGTH_SHORT)
                                     .show()

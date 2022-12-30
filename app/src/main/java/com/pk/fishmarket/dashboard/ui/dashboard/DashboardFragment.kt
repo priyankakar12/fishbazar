@@ -125,8 +125,8 @@ class DashboardFragment : Fragment() {
                                     for(i in arrayList.indices)
                                     {
                                         Log.d("day",formattedDate)
-                                        Log.d("responseday",arrayList[i].DELIVARY_DATE)
-                                        if(arrayList[i].DELIVARY_DATE == formattedDate)
+                                        Log.d("responseday",arrayList[i].ORDER_DATE)
+                                        if(arrayList[i].ORDER_DATE == formattedDate)
                                         {
                                             filterArrayList.add(arrayList[i])
                                         }

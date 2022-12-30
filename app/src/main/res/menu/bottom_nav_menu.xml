@@ -20,7 +20,10 @@
         android:id="@+id/navigation_favourites"
         android:icon="@drawable/favourite_icon"
         android:title="@string/title_fav" />-->
-
+    <item
+        android:id="@+id/navigation_favourites"
+        android:icon="@drawable/favourite_icon"
+        android:title="@string/title_fav" />
    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/profile_icon"

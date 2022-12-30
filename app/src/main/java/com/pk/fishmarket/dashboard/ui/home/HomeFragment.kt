@@ -100,6 +100,11 @@ class HomeFragment : Fragment() {
         })
         return root
     }
+
+    override fun onResume() {
+        super.onResume()
+        getData(userid,latitude,longitude)
+    }
     private fun getSearchedData(
         searchString: String,
         userid: String,
@@ -187,7 +192,7 @@ class HomeFragment : Fragment() {
         }
     }
     private fun getData(userid: String, latitude: String, longitude: String) {
-
+        arrayList.clear()
         dashboardViewModel.getDasboardResponse(userid,latitude,longitude)
         dashboardViewModel.response.observe(requireActivity()) { event ->
             event.getContentIfNotHandled()?.let { response ->

@@ -239,13 +239,57 @@
             </RelativeLayout>
 
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/password_ll"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@+id/email_ll"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/inputbox">
+
+            <EditText
+                android:textCursorDrawable="@drawable/black_cursor"
+                android:id="@+id/password_edt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:background="@null"
+                android:fontFamily="@font/regular_mont"
+                android:hint="Password"
+                android:textColor="@color/lightgrey"
+                android:textColorHint="@color/whitegrey"
+                android:layout_toLeftOf="@+id/rl_password"
+                android:layout_marginRight="10dp"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_password"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/grey_oval"
+              >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/password_lock" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
 
 
         <RelativeLayout
             android:id="@+id/submit_ll"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/email_ll"
+            android:layout_below="@+id/password_ll"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"

@@ -1,6 +1,7 @@
 package com.pk.fishmarket.networking
 
 import com.pk.fishmarket.ResponseModel.*
+import com.pk.fishmarket.ResponseModel.FavouriteItems.FavouriteItemsMainModel
 import com.pk.fishmarket.ResponseModel.UserDetails.UserDetailResponseModel
 import io.reactivex.Single
 import retrofit2.Response
@@ -207,6 +208,43 @@ interface ApiInterface {
         @Field("userid") userid: String
 
     ): Single<Response<UserDetailResponseModel>>
+
+
+@FormUrlEncoded
+    @POST("Shop_user/profile_update")
+    fun getUserProfileUpdate(
+
+        @Field("email_address") email_address: String,
+        @Field("fullname") fullname: String,
+        @Field("userid") userid: String
+
+    ): Single<Response<CartUpdateResponseModel>>
+
+
+
+@FormUrlEncoded
+    @POST("Shop_user/getfavourite")
+    fun getFavourites(
+        @Field("userid") userid: String
+
+    ): Single<Response<FavouriteItemsMainModel>>
+
+
+
+@FormUrlEncoded
+    @POST("Shop_user/delfavourites")
+    fun deleteFavourites(
+        @Field("userid") userid: String,
+        @Field("shopid") shopid: String
+
+    ): Single<Response<CartUpdateResponseModel>>
+
+
+
+
+
+
+
 
 
 
