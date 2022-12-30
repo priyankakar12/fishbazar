@@ -17,12 +17,12 @@ class LoginViewModel(val appRepository: AppRepository) : ViewModel(){
     val response : LiveData<Event<Resource<Response<LoginResponseModel>>>> = _userResponse
     private val disposable = CompositeDisposable()
 
-    fun getLoginResponse(phone_number : String) = getLogin(phone_number)
+    fun getLoginResponse(user_email : String,user_pass:String) = getLogin(user_email,user_pass)
 
-    fun getLogin(phone_number : String){
+    fun getLogin(user_email : String,user_pass:String){
         _userResponse.postValue(Event(Resource.Loading()))
         try{
-            disposable.add(appRepository.userLogin(phone_number).subscribeOn(Schedulers.io()).observeOn(
+            disposable.add(appRepository.userLogin(user_email,user_pass).subscribeOn(Schedulers.io()).observeOn(
                 Schedulers.io()
             ).subscribe(
                 {

@@ -56,14 +56,37 @@
             android:textColor="@color/black"
             android:textSize="12sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-
+        <RelativeLayout
+            android:id="@+id/cart_ll"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="6dp"
-            android:src="@drawable/notificationimg" />
+            android:background="@drawable/blue_oval">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/cart_img" />
+            <RelativeLayout
+                android:id="@+id/cart_count"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                android:background="@drawable/cart_count_drawable">
+
+                <TextView
+                    android:id="@+id/tv_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:layout_below="@+id/upper_layer"
@@ -149,6 +172,15 @@
             android:layout_below="@+id/shops_txt"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="70dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
+            android:id="@+id/recShop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shops_txt"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp" />
         <ProgressBar
             android:visibility="gone"
             android:id="@+id/progressbar"

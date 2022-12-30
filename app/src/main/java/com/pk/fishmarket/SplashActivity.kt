@@ -73,16 +73,17 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         userid = SharedPreferencesUtil().getUserId(this).toString()
+        init();
+        checkAppPermission();
+        checkPermission();
+        restoreValuesFromBundle(savedInstanceState);
         val background: Thread = object : Thread() {
             override fun run() {
                 try {
                     // Thread will sleep for 5 seconds
-                    sleep(3 * 1000.toLong())
+                    sleep(2* 1000.toLong())
 
-                    init();
-                    checkAppPermission();
-                    checkPermission();
-                    restoreValuesFromBundle(savedInstanceState);
+
                     // After 5 seconds redirect to another intent
                     //gonext()
                 } catch (e: Exception) {
@@ -95,7 +96,6 @@ class SplashActivity : AppCompatActivity() {
         background.start()
     }
     private fun checkAppPermission() {
-        Log.e("thtyuytuiylkjluyk", "jhgjkhgjghjhgjuikyu")
         if ((ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.INTERNET
@@ -154,6 +154,18 @@ class SplashActivity : AppCompatActivity() {
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
+
+                    if(userid == "") {
+                        var intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    else
+                    {
+                        var intent = Intent(this@SplashActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
 
                 // go_next();
             } else {
@@ -219,9 +231,8 @@ class SplashActivity : AppCompatActivity() {
             val longitude = lng.toString()
             Log.e("latitude", "" + latitude)
             Log.e("Longitude", "" + longitude)
-            val geocoder: Geocoder
             val addresses: List<Address>
-            geocoder = Geocoder(this, Locale.getDefault())
+            val geocoder: Geocoder = Geocoder(this, Locale.getDefault())
             try {
                 addresses = geocoder.getFromLocation(
                     lat,
@@ -230,12 +241,12 @@ class SplashActivity : AppCompatActivity() {
                 ) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
                 val address: String =
                     addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                val city: String = addresses[0].getLocality()
-                val state: String = addresses[0].getAdminArea()
-                val country: String = addresses[0].getCountryName()
-                val postalCode: String = addresses[0].getPostalCode()
-                val knownName: String = addresses[0].getFeatureName()
-                val countryCode: String = addresses[0].getCountryCode()
+                val city: String = addresses[0].locality
+                val state: String = addresses[0].adminArea
+                val country: String = addresses[0].countryName
+                val postalCode: String = addresses[0].postalCode
+                val knownName: String = addresses[0].featureName
+                val countryCode: String = addresses[0].countryCode
                 SharedPreferencesUtil().saveCity(city,this)
                 SharedPreferencesUtil().saveAddress(address,this)
                 SharedPreferencesUtil().saveCountry(country,this)
@@ -243,24 +254,38 @@ class SplashActivity : AppCompatActivity() {
                 SharedPreferencesUtil().savePostalCode(postalCode,this)
                 SharedPreferencesUtil().saveLat(latitude,this)
                 SharedPreferencesUtil().saveLong(longitude,this)
+                if (status == true) {
+                    if(userid == "") {
+                        var intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
 
+                    }
+                    else
+                    {
+                        var intent = Intent(this@SplashActivity, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
+                    status = false
+                } else {
+                }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            if (status == true) {
+            if (status) {
                 if(userid == "") {
                     var intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                    finish()
                 }
                 else
                 {
                     var intent = Intent(this@SplashActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                    finish()
                 }
                 status = false
-            } else {
             }
         }
     }
@@ -383,14 +408,6 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        /*if ((mRequestingLocationUpdates)!! && checkPermissions()) {
-            startLocationUpdates()
-        }
-        updateLocationUI()*/
     }
 
     private fun checkPermissions(): Boolean {

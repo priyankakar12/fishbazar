@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -61,6 +62,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
     var total_price = ""
 
     lateinit var total:TextView
+    lateinit var saved_address_ll:LinearLayout
     lateinit var delivery:TextView
     lateinit var subtotal:TextView
     lateinit var date_txt:TextView
@@ -95,6 +97,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
         date_txt=findViewById(R.id.date_txt)
         submit_data=findViewById(R.id.submit_data)
         edit_address_txt=findViewById(R.id.edit_address_txt)
+        saved_address_ll=findViewById(R.id.saved_address_ll)
         val repository = AppRepository()
         val factory = ViewModelFactory(repository)
         latitude= SharedPreferencesUtil().getLat(this).toString();
@@ -403,6 +406,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
                             if (response.body()!!.status == 200) {
                                 add_address.visibility = View.GONE
                                 edit_address.visibility = View.VISIBLE
+                                saved_address_ll.visibility = View.VISIBLE
                                 Address_id = response.body()!!.ADDRESS_DETAILS.ADDRESS_ID
                                 Address_one = response.body()!!.ADDRESS_DETAILS.ADDRESS_ONE
                                 Address_two = response.body()!!.ADDRESS_DETAILS.ADDRESS_TWO
@@ -418,8 +422,9 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
                             } else {
                                 add_address.visibility = View.VISIBLE
                                 edit_address.visibility = View.GONE
-                                Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT)
-                                    .show()
+                                saved_address_ll.visibility = View.GONE
+                                /*Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT)
+                                    .show()*/
                             }
 
                         }
