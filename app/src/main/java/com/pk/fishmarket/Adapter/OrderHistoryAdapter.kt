@@ -53,7 +53,7 @@ class OrderHistoryAdapter (private val context: Context, private val modelList: 
     holder.mode_of_payment.setText("Delivery Date: " + modelList[position].PAYMENT_MODE)
     holder.name.setText("Name: " + modelList[position].USER_NAME)
     holder.order_date.setText("Delivery Date: " + modelList[position].DELIVARY_DATE)
-    holder.address.setText("Address: " + modelList[position].USER_EMAIL)
+    holder.address.setText("Email: " + modelList[position].USER_EMAIL)
 
       /*  if(modelList[position].PRODUCT_DETAILS.size > 0) {
             arrayList= modelList[position].PRODUCT_DETAILS

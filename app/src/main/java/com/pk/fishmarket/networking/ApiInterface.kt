@@ -61,7 +61,8 @@ interface ApiInterface {
      @Field("product_quantity") product_quantity: String,
      @Field("userid") userid: String,
      @Field("price") price: String,
-     @Field("status") status: String
+     @Field("status") status: String,
+     @Field("quantity_amount") quantity_amount: String
  ): Single<Response<RatingModel>>
 
 @FormUrlEncoded
@@ -123,7 +124,8 @@ interface ApiInterface {
         @Field("address_one") address_one: String,
         @Field("address_two") address_two: String,
         @Field("pincode") pincode: String,
-        @Field("phone_number") phone_number: String
+        @Field("phone_number") phone_number: String,
+        @Field("addressid") addressaddressidId: String
 
     ): Single<Response<CartUpdateResponseModel>>
 
@@ -242,6 +244,14 @@ interface ApiInterface {
     fun deleteFavourites(
         @Field("userid") userid: String,
         @Field("shopid") shopid: String
+
+    ): Single<Response<CartUpdateResponseModel>>
+
+@FormUrlEncoded
+    @POST("Shop_user/delete_address")
+    fun deleteAddress(
+        @Field("userid") userid: String,
+        @Field("addressid") addressid: String
 
     ): Single<Response<CartUpdateResponseModel>>
 

@@ -11,20 +11,18 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 
-class EditAddressViewModel (val appRepository: AppRepository) : ViewModel(){
+class AddressDeleteViewModel (val appRepository: AppRepository) : ViewModel(){
     private val _userResponse = MutableLiveData<Event<Resource<Response<CartUpdateResponseModel>>>>()
 
     val response : LiveData<Event<Resource<Response<CartUpdateResponseModel>>>> = _userResponse
     private val disposable = CompositeDisposable()
 
-    fun updateAddressResponse(userid: String,name: String,address_one: String,
-                              address_two:String,pincode:String,phone_number:String,addressid:String) =
-        updateAddressData(userid,name,address_one,address_two,pincode,phone_number,addressid)
+    fun deleteAddressResponse(userid: String,addressid: String) = deleteAddressData(userid,addressid)
 
-    fun updateAddressData(userid: String,name: String,address_one: String,address_two:String,pincode:String,phone_number:String,addressid:String){
+    fun deleteAddressData(userid: String,addressid: String){
         _userResponse.postValue(Event(Resource.Loading()))
         try{
-            disposable.add(appRepository.updateAddress(userid,name,address_one,address_two,pincode,phone_number,addressid).subscribeOn(
+            disposable.add(appRepository.deleteAddress(userid,addressid).subscribeOn(
                 Schedulers.io()).observeOn(
                 Schedulers.io()
             ).subscribe(

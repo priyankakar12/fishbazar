@@ -18,12 +18,13 @@ class AddToCartViewModel  (val appRepository: AppRepository) : ViewModel(){
     val response : LiveData<Event<Resource<Response<RatingModel>>>> = _userResponse
     private val disposable = CompositeDisposable()
 
-    fun AddToCartItems(productid: String,shopid: String,product_quantity: String,userid: String,price:String,status:String) =  AddToCartItemsData(productid,shopid,product_quantity,userid,price,status)
+    fun AddToCartItems(productid: String,shopid: String,product_quantity: String,userid: String,price:String,status:String,quantity_amount:String)
+    =  AddToCartItemsData(productid,shopid,product_quantity,userid,price,status,quantity_amount)
 
-    fun  AddToCartItemsData(productid: String,shopid: String,product_quantity: String,userid: String,price:String,status:String){
+    fun  AddToCartItemsData(productid: String,shopid: String,product_quantity: String,userid: String,price:String,status:String,quantity_amount:String){
         _userResponse.postValue(Event(Resource.Loading()))
         try{
-            disposable.add(appRepository.addToCart(productid,shopid,product_quantity,userid,price,status).subscribeOn(Schedulers.io()).observeOn(
+            disposable.add(appRepository.addToCart(productid,shopid,product_quantity,userid,price,status,quantity_amount).subscribeOn(Schedulers.io()).observeOn(
                 Schedulers.io()
             ).subscribe(
                 {

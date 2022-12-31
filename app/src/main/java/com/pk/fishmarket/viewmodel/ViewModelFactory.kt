@@ -110,6 +110,10 @@ class ViewModelFactory(private val appRepository: AppRepository) : ViewModelProv
         {
             return DeleteFavouritesViewModel(appRepository) as T
         }
+        if (modelClass.isAssignableFrom(AddressDeleteViewModel::class.java))
+        {
+            return AddressDeleteViewModel(appRepository) as T
+        }
 
 
         throw IllegalArgumentException("Unknown class name")

@@ -170,7 +170,8 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
         shopid: String,
         product_quantity: String,
         price: String,
-        status: String
+        status: String,
+        quantity_amount:String
     ) {
         if(status.equals("4"))
         {

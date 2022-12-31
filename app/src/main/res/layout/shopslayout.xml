@@ -17,8 +17,8 @@ android:id="@+id/shop_ll"
         android:layout_marginTop="10dp">
         <ImageView
             android:id="@+id/imgView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/demo_image"
             android:scaleType="fitXY"
             />
