@@ -15,11 +15,14 @@ import com.pk.fishmarket.repository.AppRepository
 import com.pk.fishmarket.viewmodel.LoginViewModel
 import com.pk.fishmarket.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import com.pk.fishmarket.Utils.SharedPreferencesUtil
+import com.pk.fishmarket.dashboard.MainActivity
 
 class LoginActivity : AppCompatActivity(),View.OnClickListener {
     lateinit var submit_ll : RelativeLayout
     lateinit var main_ll : RelativeLayout
     lateinit var phone_number_edt : EditText
+    lateinit var password_edt : EditText
     lateinit var progress_circular : ProgressBar
     lateinit var send_otp_txt : TextView
     lateinit var sign_in : TextView
@@ -33,6 +36,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         setContentView(R.layout.activity_login)
         submit_ll =findViewById(R.id.submit_ll);
         main_ll =findViewById(R.id.main_ll);
+        password_edt =findViewById(R.id.password_edt);
         phone_number_edt =findViewById(R.id.phone_number_edt);
         progress_circular =findViewById(R.id.progress_circular);
         send_otp_txt =findViewById(R.id.send_otp_txt);
@@ -50,39 +54,46 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
        when(v?.id){
            R.id.submit_ll->{
                var phonenumber = phone_number_edt.text.toString()
+               var password = password_edt.text.toString()
 
 
-               when {
-                   TextUtils.isEmpty(phonenumber) -> {
-                       showToast("Please insert phonenumber")
-                       focusView = phone_number_edt
-                       cancel = true
-                   }
 
-                   else -> {
+                  if(phonenumber == "")
+                  {
+                      Toast.makeText(this, "Email cannot be empty", Toast.LENGTH_SHORT).show()
+                  }
+               else if(password == "")
+                  {
+                      Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show()
+                  }
+                      else
+                  {
+                      if (InternetConnection.isConnected(this)) {
 
-                       if (InternetConnection.isConnected(this)) {
+                          submitData(phonenumber,password)
 
-                           submitData(phonenumber)
+                      } else {
+                          mSnackbar = Snackbar
+                              .make(main_ll, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
+                              .setAction(
+                                  "Ok"
+                              ) { mSnackbar!!.dismiss() }
+                          mSnackbar!!.show()
+                      }
+                  }
 
-                       } else {
-                           mSnackbar = Snackbar
-                               .make(main_ll, "No Internet Connection", Snackbar.LENGTH_INDEFINITE)
-                               .setAction(
-                                   "Ok"
-                               ) { mSnackbar!!.dismiss() }
-                           mSnackbar!!.show()
-                       }
-                   }
-               }
+
+
+
+
 
            }
 
        }
     }
 
-    private fun submitData(phonenumber: String) {
-        loginViewModel.getLoginResponse(phonenumber)
+    private fun submitData(phonenumber: String,password:String) {
+        loginViewModel.getLoginResponse(phonenumber,password)
         loginViewModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
 
@@ -93,13 +104,17 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
                         response.data?.let { response ->
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
-                                Toast.makeText(this, response.body()?.message+ " "+response.body()?.otp, Toast.LENGTH_LONG)
-                                    .show()
 
-                                var intent = Intent(this@LoginActivity,OtpVerifyActivity::class.java)
-                                intent.putExtra("phonenumber",phonenumber)
-                                intent.putExtra("otp",response.body()?.otp.toString())
+
+                                Toast.makeText(this, response.body()?.message+ " ", Toast.LENGTH_SHORT)
+                                    .show()
+                                response.body()?.userid?.let { SharedPreferencesUtil().setUserId(it,this) }
+                                response.body()?.phone?.let { SharedPreferencesUtil().savePhone(it,this) }
+                                response.body()?.email?.let { SharedPreferencesUtil().saveEmail(it,this) }
+
+                                var intent= Intent(this, MainActivity::class.java)
                                 startActivity(intent)
+                                finish()
 
 
                             } else {

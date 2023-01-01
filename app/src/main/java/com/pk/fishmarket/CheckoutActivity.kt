@@ -9,26 +9,32 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.pk.fishmarket.Adapter.AddressAdapter
+import com.pk.fishmarket.Adapter.OrderHistoryAdapter
+import com.pk.fishmarket.ResponseModel.AddressDetails
+import com.pk.fishmarket.Utils.AddressInterface
 import com.pk.fishmarket.Utils.Resource
 import com.pk.fishmarket.Utils.SharedPreferencesUtil
 import com.pk.fishmarket.repository.AppRepository
-import com.pk.fishmarket.viewmodel.GetAllAddressViewModel
-import com.pk.fishmarket.viewmodel.GetCartDetailsViewModel
-import com.pk.fishmarket.viewmodel.PlaceOrderViewModel
-import com.pk.fishmarket.viewmodel.ViewModelFactory
+import com.pk.fishmarket.viewmodel.*
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
-class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
+class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInterface {
     lateinit var add_address:TextView
     lateinit var fullname:TextView
     lateinit var address:TextView
@@ -46,6 +52,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
     lateinit var  addAddressModel: GetAllAddressViewModel
     lateinit var getCartDetailsViewModel: GetCartDetailsViewModel
     lateinit var placeOrderViewModel: PlaceOrderViewModel
+    lateinit var addressDeleteViewModel: AddressDeleteViewModel
     var userid =""
     var Address_id=""
     var Address_one=""
@@ -61,6 +68,10 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
     var total_price = ""
 
     lateinit var total:TextView
+    lateinit var addressList:RecyclerView
+    lateinit var saved_address_ll:LinearLayout
+    lateinit var add_address_ll:RelativeLayout
+    lateinit var rl_shipping_address:RelativeLayout
     lateinit var delivery:TextView
     lateinit var subtotal:TextView
     lateinit var date_txt:TextView
@@ -70,6 +81,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
     lateinit var img_online_select:ImageView
     lateinit var edit_address_txt:ImageView
     var items_list :ArrayList<HashMap<String,String>> = ArrayList()
+    var addressArrayList :ArrayList<AddressDetails> = ArrayList()
     var cal = Calendar.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +107,10 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
         date_txt=findViewById(R.id.date_txt)
         submit_data=findViewById(R.id.submit_data)
         edit_address_txt=findViewById(R.id.edit_address_txt)
+        saved_address_ll=findViewById(R.id.saved_address_ll)
+        addressList=findViewById(R.id.addressList)
+        add_address_ll=findViewById(R.id.add_address_ll)
+        rl_shipping_address=findViewById(R.id.rl_shipping_address)
         val repository = AppRepository()
         val factory = ViewModelFactory(repository)
         latitude= SharedPreferencesUtil().getLat(this).toString();
@@ -103,6 +119,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
         addAddressModel = ViewModelProvider(this, factory)[GetAllAddressViewModel::class.java]
         getCartDetailsViewModel = ViewModelProvider(this, factory)[GetCartDetailsViewModel::class.java]
         placeOrderViewModel = ViewModelProvider(this, factory)[PlaceOrderViewModel::class.java]
+        addressDeleteViewModel = ViewModelProvider(this, factory)[AddressDeleteViewModel::class.java]
 
         order_date = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         add_address.setOnClickListener {
@@ -135,7 +152,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
         submit_data.setOnClickListener {
             var product = items_list.toString()
             //var transactionId = UUID.randomUUID().toString();
-            if(Address_id == "")
+            if(AddressAdapter.AddressId == "")
             {
                 Toast.makeText(this,"Please add an address first",Toast.LENGTH_SHORT).show()
             }
@@ -165,7 +182,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
                     order_date,
                     "0",
                     delivery_date,
-                    Address_id
+                    AddressAdapter.AddressId
                 )
                 }
                 else if(payment_mode == "online")
@@ -390,6 +407,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
     }
 
     private fun getAllAddress(userid: String) {
+        addressArrayList.clear()
         addAddressModel.getAddressResponse(userid)
         addAddressModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
@@ -397,29 +415,33 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
                 when (response) {
 
                     is Resource.Success -> {
-
+                        addressArrayList.clear()
                         response.data?.let { response ->
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
-                                add_address.visibility = View.GONE
-                                edit_address.visibility = View.VISIBLE
-                                Address_id = response.body()!!.ADDRESS_DETAILS.ADDRESS_ID
-                                Address_one = response.body()!!.ADDRESS_DETAILS.ADDRESS_ONE
-                                Address_two = response.body()!!.ADDRESS_DETAILS.ADDRESS_TWO
-                                Pincode = response.body()!!.ADDRESS_DETAILS.PINCODE
-                                Phone_number = response.body()!!.ADDRESS_DETAILS.PHONE
-                                full_name = response.body()!!.ADDRESS_DETAILS.NAME
+                                add_address_ll.visibility = View.VISIBLE
+                                rl_shipping_address.visibility = View.VISIBLE
+                                //edit_address.visibility = View.VISIBLE
+                                //saved_address_ll.visibility = View.VISIBLE
 
-
-                                fullname.text = response.body()!!.ADDRESS_DETAILS.NAME
-                                phone_edt.text = response.body()!!.ADDRESS_DETAILS.PHONE
-                                address.text = response.body()!!.ADDRESS_DETAILS.ADDRESS_ONE+","+response.body()!!.ADDRESS_DETAILS.ADDRESS_TWO+","+response.body()!!.ADDRESS_DETAILS.PINCODE
-                                //Toast.makeText(this,"Address Added Successfully", Toast.LENGTH_LONG).show()
-                            } else {
-                                add_address.visibility = View.VISIBLE
-                                edit_address.visibility = View.GONE
-                                Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT)
-                                    .show()
+                                addressArrayList = response.body()!!.ADDRESS_DETAILS
+                                var addressAdapter = AddressAdapter(this, addressArrayList,this)
+                                addressList.adapter = addressAdapter
+                                addressList.itemAnimator = DefaultItemAnimator()
+                                addressList.layoutManager = GridLayoutManager(this, 1)
+                            }
+                            else if(response.body()!!.status == 204)
+                            {
+                                addressArrayList.clear()
+                                add_address_ll.visibility = View.VISIBLE
+                                rl_shipping_address.visibility = View.GONE
+                            }
+                            else {
+                                add_address_ll.visibility = View.VISIBLE
+                               // edit_address.visibility = View.GONE
+                              //  saved_address_ll.visibility = View.GONE
+                                /*Toast.makeText(this, "Something Went Wrong", Toast.LENGTH_SHORT)
+                                    .show()*/
                             }
 
                         }
@@ -451,10 +473,53 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener {
             order_date,
             transactionid.toString(),
             delivery_date,
-            Address_id)
+            AddressAdapter.AddressId)
     }
 
     override fun onPaymentError(p0: Int, p1: String?) {
     Log.d("Error","Error")
+    }
+
+    override fun updateAddressSection(addressId: String, type: String) {
+       deleteAddress(addressId)
+    }
+
+    private fun deleteAddress(addressId:String) {
+        addressDeleteViewModel.deleteAddressData(userid,addressId)
+
+        addressDeleteViewModel.response.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { response ->
+
+                when (response) {
+
+                    is Resource.Success -> {
+
+                        response.data?.let { response ->
+                            Log.d("response", response.toString())
+                            if (response.body()!!.status == 200) {
+                                addressArrayList= ArrayList()
+                             getAllAddress(userid)
+                            } else {
+
+                            }
+
+                        }
+                    }
+                    is Resource.Error -> {
+
+                        response.message?.let { message ->
+
+                            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    is Resource.Loading -> {
+
+                    }
+                }
+            }
+        }
+
+
     }
 }

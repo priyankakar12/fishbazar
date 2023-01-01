@@ -12,15 +12,21 @@ import retrofit2.http.POST
 interface ApiInterface {
     @FormUrlEncoded
     @POST("Shop_user/login")
-    fun userLogin(@Field("phone_number") phone_number: String): Single<Response<LoginResponseModel>>
+    fun userLogin(@Field("user_email") user_email: String,@Field("user_pass") user_pass:String): Single<Response<LoginResponseModel>>
 
     @FormUrlEncoded
     @POST("Shop_user/user_signup")
     fun userRegister(
         @Field("phonenumber") phonenumber: String,
-        @Field("username") firstname: String,
-        @Field("email") email: String
-    ): Single<Response<LoginResponseModel>>
+        @Field("username") username: String,
+        @Field("email") email: String,
+        @Field("user_pass") user_pass: String,
+        @Field("user_con_pass") user_con_pass: String,
+        @Field("firstname") firstname: String,
+        @Field("lastname") lastname: String
+
+
+    ): Single<Response<CartUpdateResponseModel>>
 
     @FormUrlEncoded
     @POST("Shop_user/otp_verify")
@@ -55,7 +61,8 @@ interface ApiInterface {
      @Field("product_quantity") product_quantity: String,
      @Field("userid") userid: String,
      @Field("price") price: String,
-     @Field("status") status: String
+     @Field("status") status: String,
+     @Field("quantity_amount") quantity_amount: String
  ): Single<Response<RatingModel>>
 
 @FormUrlEncoded
@@ -117,7 +124,8 @@ interface ApiInterface {
         @Field("address_one") address_one: String,
         @Field("address_two") address_two: String,
         @Field("pincode") pincode: String,
-        @Field("phone_number") phone_number: String
+        @Field("phone_number") phone_number: String,
+        @Field("addressid") addressaddressidId: String
 
     ): Single<Response<CartUpdateResponseModel>>
 
@@ -236,6 +244,14 @@ interface ApiInterface {
     fun deleteFavourites(
         @Field("userid") userid: String,
         @Field("shopid") shopid: String
+
+    ): Single<Response<CartUpdateResponseModel>>
+
+@FormUrlEncoded
+    @POST("Shop_user/delete_address")
+    fun deleteAddress(
+        @Field("userid") userid: String,
+        @Field("addressid") addressid: String
 
     ): Single<Response<CartUpdateResponseModel>>
 

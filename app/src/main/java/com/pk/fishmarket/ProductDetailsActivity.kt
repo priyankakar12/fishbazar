@@ -19,6 +19,7 @@ import com.pk.fishmarket.Utils.Resource
 import com.pk.fishmarket.Utils.SharedPreferencesUtil
 import com.pk.fishmarket.repository.AppRepository
 import com.pk.fishmarket.viewmodel.*
+import com.squareup.picasso.Picasso
 
 
 class ProductDetailsActivity : AppCompatActivity() {
@@ -34,6 +35,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     lateinit var  ll_minus:RelativeLayout
     lateinit var  ll_add:RelativeLayout
     lateinit var  tv_count: TextView
+    lateinit var  imgView: ImageView
 
     lateinit var  cart_count: RelativeLayout
     lateinit var  submit_ll: RelativeLayout
@@ -68,6 +70,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         item_quantity = findViewById(R.id.item_quantity)
         price = findViewById(R.id.price)
         back_ll = findViewById(R.id.back_ll)
+        imgView = findViewById(R.id.imgView)
         back_ll.setOnClickListener {
             finish()
         }
@@ -154,19 +157,21 @@ class ProductDetailsActivity : AppCompatActivity() {
             qty.text.toString(),
             userid,
             price.text.toString(),
-            "1")
+            "1",
+        fish_weight.text.toString())
         }
         amt_ll.setOnClickListener {
            var  weightArr :ArrayList<String> = ArrayList()
-            weightArr.add("250 g")
-            weightArr.add("500 g")
-            weightArr.add("1 kg")
+            weightArr.add("250g")
+            weightArr.add("500g")
+            weightArr.add("1000g")
             shownewDialog(weightArr,priceNew)
         }
     }
 
-    private fun addtocart(productid: String, shopid: String, product_quantity: String,userid:String, price: String, status: String) {
-        addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status)
+    private fun addtocart(productid: String, shopid: String, product_quantity: String,userid:String, price: String,
+                          status: String,quantity_amount:String) {
+        addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status,quantity_amount)
         addToCartViewModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
 
@@ -291,7 +296,8 @@ class ProductDetailsActivity : AppCompatActivity() {
                                 priceNew = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_PRICE
                                 description_txt.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_DESC
                                 shopid = response.body()!!.PRODUCT_DETAILS[0].SHOP_ID
-
+                                var url="http://freshfishbazar.com/Fishbazar/uploads/Product_image/"+response.body()!!.PRODUCT_DETAILS[0].PRODUCT_IMAGE
+                                Picasso.get().load(url).into(imgView)
                                 arrayMore = response.body()!!.RELATED_PRODUCTS
                                 moreLikeThisAdapter = MoreLikeThisAdapter(this@ProductDetailsActivity, arrayMore)
                                 rec_more.adapter = moreLikeThisAdapter

@@ -133,6 +133,7 @@
                     android:layout_marginLeft="10dp"/>
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/edit_address_txt"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
@@ -156,73 +157,74 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_margin="10dp">
-                    <TextView
-                        android:id="@+id/addres"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/addressList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/saved_address_ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Saved Address"
-                        android:textColor="#494949"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/regular_mont"/>
-
-                    <TextView
-                        android:layout_marginTop="5dp"
-                        android:id="@+id/fullname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textColor="#075E99"
-                        android:fontFamily="@font/bold_mont"/>
-
-                    <TextView
-                        android:id="@+id/address"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#494949"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/regular_mont"/>
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/img_mobile"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/mobile_outline"/>
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/addres"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Saved Address"
+                            android:textColor="#494949"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/regular_mont"/>
 
                         <TextView
-                            android:id="@+id/phone_edt"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/fullname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textColor="#075E99"
+                            android:fontFamily="@font/bold_mont"/>
 
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#494949"
                             android:textSize="15sp"
-                            android:layout_toRightOf="@+id/img_mobile"
-                            android:layout_marginLeft="10dp"
-                            android:textColor="#494949"/>
+                            android:fontFamily="@font/regular_mont"/>
 
-                    </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/img_mobile"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/mobile_outline"/>
+
+                            <TextView
+                                android:id="@+id/phone_edt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:textSize="15sp"
+                                android:layout_toRightOf="@+id/img_mobile"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="#494949"/>
+
+                        </RelativeLayout>
 
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/lineback"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/lineback"/>
 
 
-                    <TextView
-                        android:id="@+id/add_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/red"
-                        android:textSize="18sp"
-                        android:text="Add Another Address"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="15sp"
-                        android:fontFamily="@font/regular_mont"
-                        android:gravity="center"/>
+                    </LinearLayout>
+
                      <TextView
                          android:visibility="gone"
                         android:id="@+id/edit_address"
@@ -241,8 +243,32 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/rl_bill"
+                android:id="@+id/add_address_ll"
                 android:layout_below="@+id/rl_shipping_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/moreback"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <TextView
+
+                    android:id="@+id/add_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textSize="18sp"
+                    android:text="Add Address"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15sp"
+                    android:fontFamily="@font/regular_mont"
+                    android:gravity="center"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_bill"
+                android:layout_below="@+id/add_address_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/billingback"

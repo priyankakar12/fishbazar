@@ -15,6 +15,7 @@ import com.pk.fishmarket.ProductDetailsActivity
 import com.pk.fishmarket.R
 import com.pk.fishmarket.ResponseModel.ShopResponse
 import com.pk.fishmarket.Utils.AddToCartInterface
+import com.squareup.picasso.Picasso
 
 
 class ShopNearbyAdapter(private val context: Context, private val modelList: ArrayList<ShopResponse>,var addToCartInterface: AddToCartInterface) :
@@ -51,13 +52,14 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
     }
 
     override fun onBindViewHolder(holder: ShopNearbyAdapter.ViewHolder, position: Int) {
-
+        var url="http://freshfishbazar.com/Fishbazar/uploads/Product_image/"+modelList[position].PRODUCT_IMAGE
+        Picasso.get().load(url).into(holder.product_img)
         holder.shop_name.text = modelList[position].PRODUCT_NAME
         holder.amt_ll.setOnClickListener {
             weightArr = ArrayList()
-            weightArr.add("250 g")
-            weightArr.add("500 g")
-            weightArr.add("1 kg")
+            weightArr.add("250g")
+            weightArr.add("500g")
+            weightArr.add("1000g")
             showDialog(weightArr,holder,modelList[position].PRODUCT_PRICE)
         }
         holder.price.text = modelList[position].PRODUCT_PRICE
@@ -70,7 +72,7 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
            holder.quantity_layout.visibility = View.VISIBLE
            holder.add_ll.visibility = View.GONE
             Log.d("onClick","Clicked")
-            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,holder.qty.text.toString(),holder.price.text.toString(),"1")
+            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,holder.qty.text.toString(),holder.price.text.toString(),"1",holder.fish_weight.text.toString())
         }
         holder.ll_add.setOnClickListener {
             count = holder.qty.text.toString().toInt()
@@ -103,7 +105,8 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
             price1 = actprice * count
             val priceActual = String.format("%.0f", price1)
             holder.price.setText(priceActual)
-            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,holder.qty.text.toString(),holder.price.text.toString(),"1")
+            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,
+                holder.qty.text.toString(),holder.price.text.toString(),"1",holder.fish_weight.text.toString())
 
 
         }
@@ -169,18 +172,20 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
                 holder.fish_weight.text = weightArr.get(finalI)
                 if(holder.fish_weight.text.equals("250 g"))
                 {
-                    holder.price.text = productPrice
+                    var priceNew = productPrice.toString().toInt()
+                    var priceUpdated = priceNew / 4
+                    holder.price.text = priceUpdated.toString()
                 }
                 else if(holder.fish_weight.text.equals("500 g"))
                 {
                    var priceNew = productPrice.toString().toInt()
-                    var priceUpdated = priceNew * 2
+                    var priceUpdated = priceNew / 2
                     holder.price.text= priceUpdated.toString()
                 }
                 else
                 {
                     var priceNew = productPrice.toString().toInt()
-                    var priceUpdated = priceNew * 4
+                    var priceUpdated = priceNew
                     holder.price.text= priceUpdated.toString()
                 }
 

@@ -1,5 +1,6 @@
 package com.pk.fishmarket.dashboard.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,16 +20,18 @@ import com.pk.fishmarket.ResponseModel.ShopResponse
 import com.pk.fishmarket.Utils.InternetConnection
 import com.pk.fishmarket.Utils.Resource
 import com.pk.fishmarket.Utils.SharedPreferencesUtil
-import com.pk.fishmarket.databinding.FragmentHomeBinding
+
 import com.pk.fishmarket.repository.AppRepository
-import com.pk.fishmarket.viewmodel.DashboardViewModel
-import com.pk.fishmarket.viewmodel.SearchShopViewModel
 
-import com.pk.fishmarket.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import com.pk.fishmarket.Adapter.ShopNearbyAdapter
+import com.pk.fishmarket.CartActivity
+import com.pk.fishmarket.Utils.AddToCartInterface
+import com.pk.fishmarket.databinding.FragmentHomeBinding
+import com.pk.fishmarket.viewmodel.*
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),AddToCartInterface {
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -36,6 +39,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     lateinit var homeAdapter:HomeAdapter
+    var arraySearchList:ArrayList<ShopResponse> = ArrayList()
     var arrayList:ArrayList<ShopList> = ArrayList()
     lateinit var dashboardViewModel: DashboardViewModel
     var address = ""
@@ -45,8 +49,10 @@ class HomeFragment : Fragment() {
     var longitude = ""
     var mSnackbar: Snackbar? = null
     var arrayListSearch:ArrayList<ShopResponse> = ArrayList()
-    lateinit var shopNearbyAdapter: ShopSearchDashboardAdapter
-    lateinit var  searchItemViewModel: SearchShopViewModel
+    lateinit var shopNearbyAdapter: ShopNearbyAdapter
+    //lateinit var  searchItemViewModel: SearchShopViewModel
+    lateinit var  searchItemViewModel: SearchItemViewModel
+    lateinit var  addToCartViewModel: AddToCartViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,8 +71,9 @@ class HomeFragment : Fragment() {
         binding.locationTxt.text  = address
         val repository = AppRepository()
         val factory = ViewModelFactory(repository)
-        searchItemViewModel = ViewModelProvider(this, factory)[SearchShopViewModel::class.java]
+        searchItemViewModel = ViewModelProvider(this, factory)[SearchItemViewModel::class.java]
         dashboardViewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
+        addToCartViewModel = ViewModelProvider(this, factory)[AddToCartViewModel::class.java]
         if (InternetConnection.isConnected(requireContext())) {
 
           getData(userid,latitude,longitude)
@@ -88,24 +95,43 @@ class HomeFragment : Fragment() {
                 before: Int, count: Int
             ) {
                 if (s.length != 0){
-                    var searchString = s.toString()
+                    binding.recShops.visibility=View.GONE
+                    binding.recShop.visibility=View.VISIBLE
+                   /* var searchString = s.toString()
                     getSearchedData(searchString,userid,latitude,longitude)
+*/
+                    var searchString = s.toString()
+                    getSearchedData(searchString)
                 }
                 else
                 {
                     //getShoplist(shop_id)
+                    binding.recShops.visibility=View.VISIBLE
+                    binding.recShop.visibility=View.GONE
                     getData(userid,latitude,longitude)
                 }
             }
         })
+        binding.cartCount.setOnClickListener {
+            startActivity(Intent(requireContext(), CartActivity::class.java))
+        }
         return root
     }
 
     override fun onResume() {
         super.onResume()
         getData(userid,latitude,longitude)
+        if(SharedPreferencesUtil().getCartCount(requireContext()) == "")
+        {
+            binding.cartCount.visibility = View.GONE
+        }
+        else
+        {
+            binding.cartCount.visibility = View.VISIBLE
+            binding.tvCount.text = SharedPreferencesUtil().getCartCount(requireContext())
+        }
     }
-    private fun getSearchedData(
+  /*  private fun getSearchedData(
         searchString: String,
         userid: String,
         latitude: String,
@@ -190,7 +216,52 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-    }
+    }*/
+  private fun getSearchedData(searchString: String) {
+      arraySearchList.clear()
+      binding.recShop.visibility = View.GONE
+      searchItemViewModel.getSearchedItem(searchString)
+      searchItemViewModel.response.observe(this) { event ->
+          event.getContentIfNotHandled()?.let { response ->
+
+              when (response) {
+                  is Resource.Success -> {
+                      arraySearchList.clear()
+                      response.data?.let { response ->
+                          Log.d("response", response.toString())
+                          if (response.body()!!.status == 200) {
+                              binding.recShop.visibility = View.VISIBLE
+                              arraySearchList= response.body()!!.PRODUCT_LIST
+                              shopNearbyAdapter = ShopNearbyAdapter(requireContext(), arraySearchList,this)
+                              binding.recShop.adapter = shopNearbyAdapter
+                              binding.recShop.itemAnimator = DefaultItemAnimator()
+                              binding.recShop.layoutManager = GridLayoutManager(requireContext(), 1)
+
+                          } else {
+                              binding.recShop.visibility = View.GONE
+
+                              Toast.makeText(requireContext(), "Data not found", Toast.LENGTH_SHORT)
+                                  .show()
+                          }
+
+                      }
+                  }
+                  is Resource.Error -> {
+                      binding.recShop.visibility = View.GONE
+                      response.message?.let { message ->
+
+                          Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                      }
+                  }
+
+                  is Resource.Loading -> {
+                      binding.recShop.visibility = View.GONE
+
+                  }
+              }
+          }
+      }
+  }
     private fun getData(userid: String, latitude: String, longitude: String) {
         arrayList.clear()
         dashboardViewModel.getDasboardResponse(userid,latitude,longitude)
@@ -239,5 +310,57 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun updateCart(
+        productid: String,
+        shopid: String,
+        product_quantity: String,
+        price: String,
+        status: String,
+        quantity_amount:String
+    ) {
+        addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status,quantity_amount)
+        addToCartViewModel.response.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { response ->
+
+                when (response) {
+                    is Resource.Success -> {
+
+                        response.data?.let { response ->
+                            Log.d("response", response.toString())
+                            if (response.body()!!.status == 200) {
+                                var cart_total = response.body()!!.cart_total
+                                Log.d("hhib",cart_total)
+                                SharedPreferencesUtil().saveCartCount(cart_total,requireContext())
+                                binding.cartCount.visibility = View.VISIBLE
+                                binding.tvCount.text = response.body()!!.cart_total
+
+                                Toast.makeText(requireContext(), "cart updated succesfully", Toast.LENGTH_SHORT)
+                                    .show()
+                            } else {
+
+
+                                Toast.makeText(requireContext(), "Data not found", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                        }
+                    }
+                    is Resource.Error -> {
+
+                        response.message?.let { message ->
+
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    is Resource.Loading -> {
+
+
+                    }
+                }
+            }
+        }
     }
 }

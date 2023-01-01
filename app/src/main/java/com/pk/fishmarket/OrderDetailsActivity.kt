@@ -39,6 +39,7 @@ class OrderDetailsActivity : AppCompatActivity() {
     lateinit var mode_of_payment :TextView
     lateinit var totalpayable :TextView
     lateinit var submit_ll :RelativeLayout
+    lateinit var back_ll :RelativeLayout
     var arrayList : ArrayList<PRODUCT_DETAILS> = ArrayList()
     lateinit var orderDetailsAdapter: OrderDetailsAdapter
     lateinit var orderDetailsViewModel: OrderDetailsViewModel
@@ -64,10 +65,14 @@ class OrderDetailsActivity : AppCompatActivity() {
         totalpayable=findViewById(R.id.totalpayable)
         submit_ll=findViewById(R.id.submit_ll)
         address=findViewById(R.id.address)
+        back_ll=findViewById(R.id.back_ll)
         submit_ll.setOnClickListener {
             cancelOrder(userid,orderid)
         }
         getOrderDetails(userid,orderid)
+        back_ll.setOnClickListener {
+            finish()
+        }
     }
 
     private fun cancelOrder(userid: String, orderid: String) {

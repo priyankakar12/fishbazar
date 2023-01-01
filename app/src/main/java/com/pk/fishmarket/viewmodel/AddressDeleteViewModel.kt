@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pk.fishmarket.ResponseModel.CartUpdateResponseModel
-import com.pk.fishmarket.ResponseModel.LoginResponseModel
 import com.pk.fishmarket.Utils.Event
 import com.pk.fishmarket.Utils.Resource
 import com.pk.fishmarket.repository.AppRepository
@@ -12,20 +11,19 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Response
 
-class RegistrationViewModel(val appRepository: AppRepository) : ViewModel(){
+class AddressDeleteViewModel (val appRepository: AppRepository) : ViewModel(){
     private val _userResponse = MutableLiveData<Event<Resource<Response<CartUpdateResponseModel>>>>()
 
     val response : LiveData<Event<Resource<Response<CartUpdateResponseModel>>>> = _userResponse
     private val disposable = CompositeDisposable()
 
-    fun getLoginResponse(phonenumber : String,username: String,
-                         email: String,user_pass:String,user_con_pass:String,firstname:String,lastname:String) =
-        getLogin(phonenumber,username,email,user_pass,user_con_pass,firstname,lastname)
+    fun deleteAddressResponse(userid: String,addressid: String) = deleteAddressData(userid,addressid)
 
-    fun getLogin(phonenumber : String,username: String,email: String,user_pass:String,user_con_pass:String,firstname:String,lastname:String){
+    fun deleteAddressData(userid: String,addressid: String){
         _userResponse.postValue(Event(Resource.Loading()))
         try{
-            disposable.add(appRepository.userRegister(phonenumber,username,email,user_pass,user_con_pass,firstname,lastname).subscribeOn(Schedulers.io()).observeOn(
+            disposable.add(appRepository.deleteAddress(userid,addressid).subscribeOn(
+                Schedulers.io()).observeOn(
                 Schedulers.io()
             ).subscribe(
                 {
@@ -54,4 +52,5 @@ class RegistrationViewModel(val appRepository: AppRepository) : ViewModel(){
         super.onCleared()
         disposable.dispose()
     }
+
 }

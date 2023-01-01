@@ -29,6 +29,7 @@ class HomeAdapter (private val context: Context, private val modelList: ArrayLis
     var rating3 = itemView.findViewById<ImageView>(R.id.rating3)
     var rating2 = itemView.findViewById<ImageView>(R.id.rating2)
     var rating1 = itemView.findViewById<ImageView>(R.id.rating1)
+    var imgView = itemView.findViewById<ImageView>(R.id.imgView)
 
 
 
@@ -45,6 +46,8 @@ class HomeAdapter (private val context: Context, private val modelList: ArrayLis
 
     override fun onBindViewHolder(holder: HomeAdapter.ViewHolder, position: Int) {
       //  Picasso.get().load(modelList[position].IMAGE_PATH).into(holder.imgView)
+        var url="http://freshfishbazar.com/Fishbazar/uploads/Shop_image/"+modelList[position].SHOP_IMAGE
+        Picasso.get().load(url).into(holder.imgView)
         holder.shop_name.text = modelList[position].SHOP_NAME
         holder.currencyicon.text = modelList[position].SHOP_OWNER_NAME
         holder.price.text = modelList[position].DISTANCE

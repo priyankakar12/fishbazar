@@ -70,7 +70,7 @@ class EditAddressActivity : AppCompatActivity() {
         }
     }
     private fun submitAddress(userid: String, fullname: String, addressone: String, addresstwo: String, pincode: String, phoneNumber: String) {
-        editAddressModel.updateAddressResponse(userid ,fullname,addressone,addresstwo,pincode,phoneNumber)
+        editAddressModel.updateAddressResponse(userid ,fullname,addressone,addresstwo,pincode,phoneNumber,Address_id)
         editAddressModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
 

@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:text="Katla Fish Fresh Cut"
+
             android:layout_marginTop="28dp"
             android:textSize="18sp"
             android:textColor="@color/black"
@@ -114,56 +114,15 @@
                 android:layout_height="210dp"
                 app:cardCornerRadius="10dp">
 
-                <RelativeLayout
+                <ImageView
+                    android:id="@+id/imgView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/poduct_image">
+                    android:layout_height="210dp"
+                   />
 
-                    <RelativeLayout
-                        android:layout_width="60dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/ratingbox"
-                        android:visibility="gone">
 
-                        <ImageView
-                            android:id="@+id/rating_img"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
-                            android:src="@drawable/ratingyellow" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@+id/rating_img"
-                            android:fontFamily="@font/medium_mont"
-                            android:text="4.5"
-                            android:textColor="@color/red" />
 
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/transparentcircle"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/favourites_selected" />
-                    </RelativeLayout>
-
-                </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
 
@@ -242,7 +201,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/semibold_mont"
-                android:text="Anu Fish Center"
+
                 android:textColor="@color/black"
                 android:layout_marginRight="15dp"
                 android:textSize="14sp" />
@@ -401,7 +360,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+               />
 
         </RelativeLayout>
 

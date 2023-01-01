@@ -34,6 +34,7 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
     lateinit var main_ll:RelativeLayout
     lateinit var rl_more:RelativeLayout
     lateinit var checkout:RelativeLayout
+    lateinit var cart_emp:RelativeLayout
     lateinit var cart_ll_layout:RelativeLayout
     lateinit var proceed_ll:RelativeLayout
     lateinit var tv_pro:ProgressBar
@@ -62,6 +63,7 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
         cart_ll_layout=findViewById(R.id.cart_ll_layout)
         tv_pro=findViewById(R.id.tv_pro)
         proceed_ll=findViewById(R.id.proceed_ll)
+        cart_emp=findViewById(R.id.cart_emp)
 
         latitude= SharedPreferencesUtil().getLat(this).toString();
         longitude= SharedPreferencesUtil().getLong(this).toString();
@@ -142,7 +144,8 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
                                 SharedPreferencesUtil().saveCartCount(cart_total,this)
                                 tv_pro.visibility = View.GONE
                                 proceed_ll.visibility= View.GONE
-                                cart_ll_layout.visibility= View.GONE
+                                //cart_ll_layout.visibility= View.GONE
+                                cart_emp.visibility= View.GONE
                                 Toast.makeText(this, "cart is empty", Toast.LENGTH_SHORT)
                                     .show()
                             }
@@ -170,7 +173,8 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
         shopid: String,
         product_quantity: String,
         price: String,
-        status: String
+        status: String,
+        quantity_amount:String
     ) {
         if(status.equals("4"))
         {

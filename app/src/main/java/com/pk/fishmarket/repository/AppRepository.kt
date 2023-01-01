@@ -1,12 +1,13 @@
 package com.pk.fishmarket.repository
 
 import com.pk.fishmarket.networking.RetrofitClient
+import retrofit2.http.Field
 
 
 class AppRepository {
-    fun userLogin(phone_number : String) = RetrofitClient.apiInterface.userLogin(phone_number)
-    fun userRegister(phonenumber : String,username: String,email: String
-    ) = RetrofitClient.apiInterface.userRegister(phonenumber,username,email)
+    fun userLogin(user_email : String,user_pass:String) = RetrofitClient.apiInterface.userLogin(user_email,user_pass)
+    fun userRegister(phonenumber : String,username: String,email: String,user_pass:String,user_con_pass:String,firstname:String,lastname:String
+    ) = RetrofitClient.apiInterface.userRegister(phonenumber,username,email,user_pass,user_con_pass,firstname,lastname)
 
     fun userOtpVerify(phone_number : String,otp:String) = RetrofitClient.apiInterface.userOtpVerify(phone_number,otp)
 
@@ -15,8 +16,8 @@ class AppRepository {
     fun getShopsData(shop_id:String) = RetrofitClient.apiInterface.getShopsData(shop_id)
     fun getSearchedItems(search_item:String) = RetrofitClient.apiInterface.searchItem(search_item)
     fun addReview(rating_count: String,feedback: String,userid: String,shopid: String) = RetrofitClient.apiInterface.addRating(rating_count,feedback,userid,shopid)
-    fun addToCart(productid: String,shopid: String,product_quantity: String,userid: String,price:String,status:String) =
-        RetrofitClient.apiInterface.addtocart(productid,shopid,product_quantity,userid,price,status)
+    fun addToCart(productid: String,shopid: String,product_quantity: String,userid: String,price:String,status:String,quantity_amount:String) =
+        RetrofitClient.apiInterface.addtocart(productid,shopid,product_quantity,userid,price,status,quantity_amount)
 
     fun getDetails(productid: String) =
         RetrofitClient.apiInterface.getProductDetails(productid)
@@ -33,8 +34,8 @@ class AppRepository {
     fun addnewAddress(userid: String,name: String,address_one: String,address_two:String,pincode:String,phone_number:String) =
         RetrofitClient.apiInterface.addAddress(userid,name,address_one,address_two,pincode,phone_number)
 
- fun updateAddress(userid: String,name: String,address_one: String,address_two:String,pincode:String,phone_number:String) =
-        RetrofitClient.apiInterface.updateAddress(userid,name,address_one,address_two,pincode,phone_number)
+ fun updateAddress(userid: String,name: String,address_one: String,address_two:String,pincode:String,phone_number:String,addressid:String) =
+        RetrofitClient.apiInterface.updateAddress(userid,name,address_one,address_two,pincode,phone_number,addressid)
 
 
     fun getAllAddress(userid: String) =
@@ -76,6 +77,9 @@ class AppRepository {
 
          fun deleteFavourites(userid:String,shopid:String) =
         RetrofitClient.apiInterface.deleteFavourites(userid,shopid)
+
+         fun deleteAddress(userid:String,addressid:String) =
+        RetrofitClient.apiInterface.deleteAddress(userid,addressid)
 
 
 

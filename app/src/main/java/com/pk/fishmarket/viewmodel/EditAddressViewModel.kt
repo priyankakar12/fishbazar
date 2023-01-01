@@ -17,13 +17,14 @@ class EditAddressViewModel (val appRepository: AppRepository) : ViewModel(){
     val response : LiveData<Event<Resource<Response<CartUpdateResponseModel>>>> = _userResponse
     private val disposable = CompositeDisposable()
 
-    fun updateAddressResponse(userid: String,name: String,address_one: String,address_two:String,pincode:String,phone_number:String) =
-        updateAddressData(userid,name,address_one,address_two,pincode,phone_number)
+    fun updateAddressResponse(userid: String,name: String,address_one: String,
+                              address_two:String,pincode:String,phone_number:String,addressid:String) =
+        updateAddressData(userid,name,address_one,address_two,pincode,phone_number,addressid)
 
-    fun updateAddressData(userid: String,name: String,address_one: String,address_two:String,pincode:String,phone_number:String){
+    fun updateAddressData(userid: String,name: String,address_one: String,address_two:String,pincode:String,phone_number:String,addressid:String){
         _userResponse.postValue(Event(Resource.Loading()))
         try{
-            disposable.add(appRepository.updateAddress(userid,name,address_one,address_two,pincode,phone_number).subscribeOn(
+            disposable.add(appRepository.updateAddress(userid,name,address_one,address_two,pincode,phone_number,addressid).subscribeOn(
                 Schedulers.io()).observeOn(
                 Schedulers.io()
             ).subscribe(
