@@ -55,7 +55,7 @@ class RegistrationActivity : AppCompatActivity() {
             {
                 Toast.makeText(this, "phone number cannot be blank", Toast.LENGTH_SHORT).show()
             }
-              if(email =="")
+             else if(email =="")
             {
                 Toast.makeText(this, "email cannot be blank", Toast.LENGTH_SHORT).show()
             }
@@ -76,10 +76,7 @@ class RegistrationActivity : AppCompatActivity() {
             {
                 Toast.makeText(this, " confirm password cannot be blank", Toast.LENGTH_SHORT).show()
             }
-             else if(conpassword_edt.text.toString() == password_edt.text.toString())
-            {
-                Toast.makeText(this, " confirm password and password should be same", Toast.LENGTH_SHORT).show()
-            }
+
             else
             {
                 submitData(phonenumber,username,email,user_pass,user_con_pass,firstname,lastname)
@@ -100,13 +97,13 @@ class RegistrationActivity : AppCompatActivity() {
                         response.data?.let { response ->
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
-                                Toast.makeText(this, response.body()?.message+ " "+response.body()?.message, Toast.LENGTH_LONG)
+                                Toast.makeText(this, response.body()?.message, Toast.LENGTH_LONG)
                                     .show()
 
                                 var intent = Intent(this,LoginActivity::class.java)
-
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
-                                finish()
+
 
                             } else {
 
