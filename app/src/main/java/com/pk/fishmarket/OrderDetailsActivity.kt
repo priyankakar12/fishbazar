@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
@@ -38,6 +39,7 @@ class OrderDetailsActivity : AppCompatActivity() {
     lateinit var phone_number :TextView
     lateinit var mode_of_payment :TextView
     lateinit var totalpayable :TextView
+    lateinit var orderstats :TextView
     lateinit var submit_ll :RelativeLayout
     lateinit var back_ll :RelativeLayout
     var arrayList : ArrayList<PRODUCT_DETAILS> = ArrayList()
@@ -66,6 +68,7 @@ class OrderDetailsActivity : AppCompatActivity() {
         submit_ll=findViewById(R.id.submit_ll)
         address=findViewById(R.id.address)
         back_ll=findViewById(R.id.back_ll)
+        orderstats=findViewById(R.id.orderstats)
         submit_ll.setOnClickListener {
             cancelOrder(userid,orderid)
         }
@@ -141,6 +144,21 @@ class OrderDetailsActivity : AppCompatActivity() {
                                 {
                                     submit_ll.visibility = View.VISIBLE
                                 }
+                                if(response.body()!!.ORDER_DETAILS[0].DELIVARY_STATUS == "0")
+                                {
+                                    orderstats.text= "Not Delivered"
+                                    orderstats.setTextColor(ContextCompat.getColor(this,R.color.blue))
+                                }
+                                else if(response.body()!!.ORDER_DETAILS[0].DELIVARY_STATUS == "0")
+                                {
+                                    orderstats.text= "Delivered"
+                                    orderstats.setTextColor(ContextCompat.getColor(this,R.color.green))
+                                }
+                                else
+                                {
+                                    orderstats.text= "Pending"
+                                    orderstats.setTextColor(ContextCompat.getColor(this,R.color.grey))
+                                }
                                 if(deliveryDate == formattedDate)
                                 {
                                     submit_ll.visibility = View.VISIBLE
@@ -156,7 +174,7 @@ class OrderDetailsActivity : AppCompatActivity() {
                                 delivery_date.text = "Delivery Date : "+response.body()!!.ORDER_DETAILS[0].DELIVARY_DATE
                                 address.text = "Address : "+response.body()!!.ORDER_DETAILS[0].ADDRESS_DETAILS[0].ADDRESS_ONE+","+response.body()!!.ORDER_DETAILS[0].ADDRESS_DETAILS[0].ADDRESS_TWO+","+response.body()!!.ORDER_DETAILS[0].ADDRESS_DETAILS[0].PINCODE
                                 mode_of_payment.text = "Mode Of Payment : "+response.body()!!.ORDER_DETAILS[0].PAYMENT_MODE
-                                totalpayable.text = "Total Payable : "+response.body()!!.ORDER_DETAILS[0].TOTAL_PRICE
+                                totalpayable.text = "Total Payable : Rs."+response.body()!!.ORDER_DETAILS[0].TOTAL_PRICE+" including delivery charges"
 
                                 var arrayList= response.body()!!.ORDER_DETAILS[0].PRODUCT_DETAILS
                                 orderDetailsAdapter = OrderDetailsAdapter(this, arrayList)

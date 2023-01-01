@@ -62,7 +62,10 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
             weightArr.add("1000g")
             showDialog(weightArr,holder,modelList[position].PRODUCT_PRICE)
         }
-        holder.price.text = modelList[position].PRODUCT_PRICE
+        //holder.price.text = modelList[position].PRODUCT_PRICE
+        var priceNew = modelList[position].PRODUCT_PRICE.toString().toInt()
+        var priceUpdated = priceNew / 4
+        holder.price.text = priceUpdated.toString()
         holder.shop_name.setOnClickListener {
             var intent = Intent(context,ProductDetailsActivity::class.java)
             intent.putExtra("productid",modelList.get(position).PRODUCT_ID)
@@ -170,13 +173,13 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
             tv.setOnClickListener {
                 var actualPrice = holder.price.text
                 holder.fish_weight.text = weightArr.get(finalI)
-                if(holder.fish_weight.text.equals("250 g"))
+                if(holder.fish_weight.text.equals("250g"))
                 {
                     var priceNew = productPrice.toString().toInt()
                     var priceUpdated = priceNew / 4
                     holder.price.text = priceUpdated.toString()
                 }
-                else if(holder.fish_weight.text.equals("500 g"))
+                else if(holder.fish_weight.text.equals("500g"))
                 {
                    var priceNew = productPrice.toString().toInt()
                     var priceUpdated = priceNew / 2

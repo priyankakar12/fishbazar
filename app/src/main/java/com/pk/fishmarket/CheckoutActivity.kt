@@ -173,7 +173,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
 
                 if(payment_mode == "COD")
                 {
-
+                    Log.d("product",product)
                 submitData(
                     userid,
                     product,
@@ -276,7 +276,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
         Log.d("deliveryDate",deliveryDate)
         Log.d("addressId",addressId)
         Log.d("orderDate",orderDate)
-        placeOrderViewModel.addOrder(userid,product,totalPrice,paymentMode,orderDate,transactionId,deliveryDate,addressId)
+        placeOrderViewModel.addOrder(userid,product,totalPrice,paymentMode,orderDate,transactionId,deliveryDate,addressId,"0")
         placeOrderViewModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
 
@@ -339,18 +339,18 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
                         response.data?.let { response ->
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
-                                var hashMap: HashMap<String,String> = HashMap()
+
                                 var arry = response.body()!!.CART_DETAILS
 
-                                for(i in arry.indices)
-                                {
-                                    hashMap.set("product_id",arry[i].PRODUCT_ID)
-                                    hashMap.set("shop_id",arry[i].SHOP_ID)
-                                    hashMap.set("product_name",arry[i].PRODUCT_TITLE)
-                                    hashMap.set("product_price",arry[i].PRODUCT_PRICE)
-                                    hashMap.set("product_quantity",arry[i].PRODUCT_QUANTITY)
-                                    items_list.add(hashMap)
-                                }
+                                    for (i in arry.indices) {
+                                        var hashMap: HashMap<String,String> = HashMap()
+                                        hashMap.put("product_id", arry[i].PRODUCT_ID)
+                                        hashMap.put("shop_id", arry[i].SHOP_ID)
+                                        hashMap.put("product_name", arry[i].PRODUCT_TITLE)
+                                        hashMap.put("product_price", arry[i].PRODUCT_PRICE)
+                                        hashMap.put("product_quantity", arry[i].PRODUCT_QUANTITY)
+                                        items_list.add(hashMap)
+                                    }
 
 
                                 subtotal.text=response.body()!!.SUBTOTAL

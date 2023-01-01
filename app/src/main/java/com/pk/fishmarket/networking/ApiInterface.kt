@@ -162,7 +162,8 @@ interface ApiInterface {
         @Field("transaction_id") transaction_id: String,
         @Field("orderdate") orderdate: String,
         @Field("deliverydate") deliverydate: String,
-        @Field("addressid") addressid: String
+        @Field("addressid") addressid: String,
+        @Field("delivary_status") delivary_status: String
 
     ): Single<Response<CartUpdateResponseModel>>
 

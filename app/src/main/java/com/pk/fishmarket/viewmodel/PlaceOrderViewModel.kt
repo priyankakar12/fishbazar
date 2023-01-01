@@ -21,18 +21,18 @@ class PlaceOrderViewModel (val appRepository: AppRepository) : ViewModel(){
                    ,orderdate:String,
                    transaction_id:String,
                    deliverydate:String,
-                   addressid:String) =  addOrderData(userid,product,total_price,mode_of_payment,transaction_id,orderdate,deliverydate,
-        addressid)
+                   addressid:String,delivary_status:String) =  addOrderData(userid,product,total_price,mode_of_payment,transaction_id,orderdate,deliverydate,
+        addressid,delivary_status)
 
     fun  addOrderData(userid: String,product: String,total_price: String,mode_of_payment:String
                            ,orderdate:String,
                            transaction_id:String,
                            deliverydate:String,
-                           addressid:String){
+                           addressid:String,delivary_status:String){
         _userResponse.postValue(Event(Resource.Loading()))
         try{
             disposable.add(appRepository.placeOrder(userid,product,total_price,mode_of_payment,transaction_id,orderdate,deliverydate,
-                addressid).subscribeOn(Schedulers.io()).observeOn(
+                addressid,delivary_status).subscribeOn(Schedulers.io()).observeOn(
                 Schedulers.io()
             ).subscribe(
                 {

@@ -2,39 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
-    <TextView
-        android:id="@+id/product_name"
-        android:layout_width="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/shop_grey_layout">
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Katla"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/semibold_mont"
-        />
+        android:padding="8dp"
+        android:layout_centerVertical="true">
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Katla"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/semibold_mont"
+            />
 
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rs. 750"
-        android:textSize="16sp"
-        android:textColor="@color/red"
-        android:fontFamily="@font/semibold_mont"
-        android:layout_alignParentRight="true"
-        />
-    <TextView
-        android:layout_below="@+id/product_name"
-        android:id="@+id/qty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Qty:2"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/semibold_mont"
-        />
+        <TextView
+
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rs. 750"
+            android:textSize="16sp"
+            android:textColor="@color/red"
+            android:fontFamily="@font/semibold_mont"
+            android:layout_alignParentRight="true"
+            />
+        <TextView
+            android:layout_below="@+id/product_name"
+            android:id="@+id/qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Qty:2"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/semibold_mont"
+            />
+
+    </RelativeLayout>
 
 
 

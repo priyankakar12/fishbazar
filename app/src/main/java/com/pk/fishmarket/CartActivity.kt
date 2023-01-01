@@ -90,6 +90,7 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
         Log.d("latitude",latitude)
         Log.d("longitude",longitude)
         arrayList.clear()
+        arrayList=ArrayList()
         tv_pro.visibility = View.VISIBLE
         getCartDetailsViewModel.getCartResponse(userid,latitude,longitude)
         getCartDetailsViewModel.response.observe(this) { event ->
@@ -144,8 +145,8 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
                                 SharedPreferencesUtil().saveCartCount(cart_total,this)
                                 tv_pro.visibility = View.GONE
                                 proceed_ll.visibility= View.GONE
-                                //cart_ll_layout.visibility= View.GONE
-                                cart_emp.visibility= View.GONE
+                                cart_ll_layout.visibility= View.GONE
+                                cart_emp.visibility= View.VISIBLE
                                 Toast.makeText(this, "cart is empty", Toast.LENGTH_SHORT)
                                     .show()
                             }

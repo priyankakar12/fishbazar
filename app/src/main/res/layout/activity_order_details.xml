@@ -109,14 +109,16 @@
 
         <TextView
             android:id="@+id/order_id"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/semibold_mont"
             android:text="Today"
+            android:singleLine="true"
             android:textColor="@color/blue"
             android:textSize="16sp" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/order_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -127,6 +129,7 @@
             android:textSize="16sp" />
 
         <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/delivery_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,23 +141,23 @@
 
 
         <TextView
-            android:id="@+id/order_cancel"
+            android:id="@+id/orderstats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:fontFamily="@font/semibold_mont"
-            android:text="Cancel"
+
             android:textColor="@color/red"
             android:textSize="16sp"
-            android:visibility="gone" />
+            />
 
         <View
             android:id="@+id/view1"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_below="@+id/delivery_date"
             android:layout_marginTop="10dp"
-            android:background="@color/grey" />
+            android:background="@drawable/lineback" />
 
         <TextView
             android:id="@+id/prdtxt"
@@ -174,46 +177,57 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/prdtxt" />
 
-        <TextView
-            android:id="@+id/userDetailstxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:id="@+id/address_ll"
             android:layout_below="@+id/rec_orders"
-            android:fontFamily="@font/semibold_mont"
-            android:text="User Details"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/userDetailstxt"
-            android:text="Priyanka kar"
-            android:textColor="@color/grey" />
+            android:layout_marginTop="10dp"
+            android:padding="8dp"
+            android:background="@drawable/search_box">
+            <TextView
+                android:id="@+id/userDetailstxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="@font/semibold_mont"
+                android:text="Delivery Address Details"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/userDetailstxt"
+                android:text="Priyanka kar"
+                android:textColor="@color/grey" />
 
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
-            android:text="badal nikatan,kestopur,rabindrapally"
-            android:textColor="@color/grey" />
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:text="badal nikatan,kestopur,rabindrapally"
+                android:textColor="@color/grey" />
 
 
-        <TextView
-            android:id="@+id/phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/address"
-            android:text="8017378426" />
+            <TextView
+                android:id="@+id/phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:text="8017378426" />
+        </RelativeLayout>
+
+
 
         <TextView
             android:id="@+id/mode_of_payment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/phone_number"
+            android:layout_below="@+id/address_ll"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/semibold_mont"
             android:text="Mode Of Payment"

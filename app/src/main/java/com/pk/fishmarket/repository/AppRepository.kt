@@ -53,9 +53,9 @@ class AppRepository {
                       ,orderdate:String,
                       transaction_id:String,
                       deliverydate:String,
-                      addressid:String) =
+                      addressid:String,delivary_status:String) =
         RetrofitClient.apiInterface.placeOrder(userid,product,total_price,mode_of_payment,transaction_id,orderdate,deliverydate,
-            addressid)
+            addressid,delivary_status)
 
         fun orderHistory(userid: String) =
         RetrofitClient.apiInterface.orderHistory(userid)

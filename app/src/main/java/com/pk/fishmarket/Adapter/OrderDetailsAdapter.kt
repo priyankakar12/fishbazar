@@ -32,9 +32,9 @@ class OrderDetailsAdapter (private val context: Context, private val modelList: 
     }
 
     override fun onBindViewHolder(holder: OrderDetailsAdapter.ViewHolder, position: Int) {
-        holder.product_name.setText(modelList[position].product_name)
-        holder.qty.setText("Qty : " + modelList[position].product_quantity)
-        holder.price.setText("Total Payable : " + modelList[position].product_price)
+        holder.product_name.setText(modelList[position].PRODUCT_NAME)
+        holder.qty.setText("Qty : " + modelList[position].PRODUCT_QUANTITY)
+        holder.price.setText("Rs." + modelList[position].PRODUCT_PRICE)
     }
 
     override fun getItemCount(): Int {
