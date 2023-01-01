@@ -71,6 +71,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
     lateinit var addressList:RecyclerView
     lateinit var saved_address_ll:LinearLayout
     lateinit var add_address_ll:RelativeLayout
+    lateinit var rl_shipping_address:RelativeLayout
     lateinit var delivery:TextView
     lateinit var subtotal:TextView
     lateinit var date_txt:TextView
@@ -109,6 +110,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
         saved_address_ll=findViewById(R.id.saved_address_ll)
         addressList=findViewById(R.id.addressList)
         add_address_ll=findViewById(R.id.add_address_ll)
+        rl_shipping_address=findViewById(R.id.rl_shipping_address)
         val repository = AppRepository()
         val factory = ViewModelFactory(repository)
         latitude= SharedPreferencesUtil().getLat(this).toString();
@@ -418,6 +420,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
                                 add_address_ll.visibility = View.VISIBLE
+                                rl_shipping_address.visibility = View.VISIBLE
                                 //edit_address.visibility = View.VISIBLE
                                 //saved_address_ll.visibility = View.VISIBLE
 
@@ -431,6 +434,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
                             {
                                 addressArrayList.clear()
                                 add_address_ll.visibility = View.VISIBLE
+                                rl_shipping_address.visibility = View.GONE
                             }
                             else {
                                 add_address_ll.visibility = View.VISIBLE

@@ -116,6 +116,7 @@
             android:background="@drawable/inputbox">
 
             <EditText
+                android:inputType="textPassword"
                 android:textCursorDrawable="@drawable/black_cursor"
                 android:id="@+id/password_edt"
                 android:layout_width="match_parent"
