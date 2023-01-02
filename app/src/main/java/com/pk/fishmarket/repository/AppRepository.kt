@@ -16,8 +16,9 @@ class AppRepository {
     fun getShopsData(shop_id:String) = RetrofitClient.apiInterface.getShopsData(shop_id)
     fun getSearchedItems(search_item:String) = RetrofitClient.apiInterface.searchItem(search_item)
     fun addReview(rating_count: String,feedback: String,userid: String,shopid: String) = RetrofitClient.apiInterface.addRating(rating_count,feedback,userid,shopid)
-    fun addToCart(productid: String,shopid: String,product_quantity: String,userid: String,price:String,status:String,quantity_amount:String) =
-        RetrofitClient.apiInterface.addtocart(productid,shopid,product_quantity,userid,price,status,quantity_amount)
+    fun addToCart(productid: String,shopid: String,product_quantity: String,
+                  userid: String,price:String,status:String,quantity_amount:String,base_amount:String,base_price:String) =
+        RetrofitClient.apiInterface.addtocart(productid,shopid,product_quantity,userid,price,status,quantity_amount,base_amount,base_price)
 
     fun getDetails(productid: String) =
         RetrofitClient.apiInterface.getProductDetails(productid)
@@ -25,8 +26,9 @@ class AppRepository {
     fun getCartDetails(userid: String,lat:String,long:String) =
         RetrofitClient.apiInterface.getCartDetails(userid,lat,long)
 
-    fun updateCart(productid: String,product_quantity: String,userid: String,price:String) =
-        RetrofitClient.apiInterface.updatecart(productid,product_quantity,userid,price)
+    fun updateCart(productid: String,product_quantity: String,userid: String,price:String,
+                   base_amount:String,base_price:String,status:String) =
+        RetrofitClient.apiInterface.updatecart(productid,product_quantity,userid,price,base_amount,base_price,status)
 
     fun deleteCart(productid: String,userid: String) =
         RetrofitClient.apiInterface.deletecart(productid,userid)

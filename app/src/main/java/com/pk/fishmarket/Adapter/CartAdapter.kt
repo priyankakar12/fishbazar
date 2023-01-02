@@ -47,13 +47,13 @@ class CartAdapter (private val context: Context, private val modelList: ArrayLis
 
     override fun onBindViewHolder(holder: CartAdapter.ViewHolder, position: Int) {
 
-        holder.fish_weight.text = modelList[position].QUANTITY_AMOUNT+" gms"
+        holder.fish_weight.text = modelList[position].BASE_AMOUNT+" gms"
         holder.shop_name.text = modelList[position].PRODUCT_TITLE
         holder.qty.text = modelList[position].PRODUCT_QUANTITY
         holder.price.text = modelList[position].PRODUCT_PRICE
         Log.d("gvuvu",modelList[position].PRODUCT_PRICE)
         holder.img_delete.setOnClickListener{
-            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),holder.price.text.toString(),"4",modelList[position].PRODUCT_QUANTITY)
+            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),holder.price.text.toString(),"4",modelList[position].PRODUCT_QUANTITY,"","")
 
         }
 
@@ -89,7 +89,8 @@ class CartAdapter (private val context: Context, private val modelList: ArrayLis
             price1 = actprice * count
             val priceActual = String.format("%.0f", price1)
             holder.price.setText(priceActual)
-            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),holder.price.text.toString(),"1","")
+            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),
+                holder.price.text.toString(),"1","",modelList[position].BASE_AMOUNT,modelList[position].BASE_PRICE)
 
 
         }
@@ -115,7 +116,13 @@ class CartAdapter (private val context: Context, private val modelList: ArrayLis
                     //minus_jar.setEnabled(true);
                     Log.e("QTYyy111", "" + productQty)
                 }
-                addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),holder.price.text.toString(),"0","")
+                addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),
+                    holder.price.text.toString(),"0","",modelList[position].BASE_AMOUNT,modelList[position].BASE_PRICE)
+
+            }
+            else
+            {
+                addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),holder.price.text.toString(),"4",modelList[position].PRODUCT_QUANTITY,"","")
 
             }
         }

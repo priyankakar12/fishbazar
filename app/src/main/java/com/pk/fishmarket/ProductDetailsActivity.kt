@@ -162,16 +162,17 @@ class ProductDetailsActivity : AppCompatActivity() {
         }
         amt_ll.setOnClickListener {
            var  weightArr :ArrayList<String> = ArrayList()
-            weightArr.add("250g")
-            weightArr.add("500g")
             weightArr.add("1000g")
+            weightArr.add("500g")
+            weightArr.add("250g")
             shownewDialog(weightArr,priceNew)
         }
     }
 
     private fun addtocart(productid: String, shopid: String, product_quantity: String,userid:String, price: String,
                           status: String,quantity_amount:String) {
-        addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status,quantity_amount)
+        addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status,
+            quantity_amount,"1000g", priceNew)
         addToCartViewModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
 
@@ -245,21 +246,22 @@ class ProductDetailsActivity : AppCompatActivity() {
             tv.setOnClickListener {
                 var actualPrice = price.text
                 fish_weight.text = weightArr.get(finalI)
-                if(fish_weight.text.equals("250 g"))
+                if(fish_weight.text.equals("250g"))
                 {
-                    price.text = priceNew
+                    var priceNew1 = priceNew.toString().toInt()
+                    var priceUpdated = priceNew1 / 4
+                    price.text = priceUpdated.toString()
                 }
-                else if(fish_weight.text.equals("500 g"))
+                else if(fish_weight.text.equals("500g"))
                 {
-                    var priceNew = priceNew.toString().toInt()
-                    var priceUpdated = priceNew * 2
-                    price.text= priceUpdated.toString()
+                    var priceNew1 = priceNew.toString().toInt()
+                    var priceUpdated = priceNew1 / 2
+                    price.text = priceUpdated.toString()
                 }
                 else
                 {
-                    var priceNew = priceNew.toString().toInt()
-                    var priceUpdated = priceNew * 4
-                    price.text= priceUpdated.toString()
+
+                    price.text= priceNew
                 }
 
                 popup!!.dismiss()
@@ -291,7 +293,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
                                 item_title.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_NAME
-                                item_quantity.text = "250 g"
+                                item_quantity.text = "1000g"
                                 price.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_PRICE
                                 priceNew = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_PRICE
                                 description_txt.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_DESC

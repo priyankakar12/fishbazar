@@ -57,15 +57,15 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
         holder.shop_name.text = modelList[position].PRODUCT_NAME
         holder.amt_ll.setOnClickListener {
             weightArr = ArrayList()
-            weightArr.add("250g")
-            weightArr.add("500g")
             weightArr.add("1000g")
+            weightArr.add("500g")
+            weightArr.add("250g")
             showDialog(weightArr,holder,modelList[position].PRODUCT_PRICE)
         }
         //holder.price.text = modelList[position].PRODUCT_PRICE
         var priceNew = modelList[position].PRODUCT_PRICE.toString().toInt()
         var priceUpdated = priceNew / 4
-        holder.price.text = priceUpdated.toString()
+        holder.price.text = modelList[position].PRODUCT_PRICE.toString()
         holder.shop_name.setOnClickListener {
             var intent = Intent(context,ProductDetailsActivity::class.java)
             intent.putExtra("productid",modelList.get(position).PRODUCT_ID)
@@ -75,7 +75,10 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
            holder.quantity_layout.visibility = View.VISIBLE
            holder.add_ll.visibility = View.GONE
             Log.d("onClick","Clicked")
-            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,holder.qty.text.toString(),holder.price.text.toString(),"1",holder.fish_weight.text.toString())
+            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,
+                modelList.get(position).SHOP_ID,holder.qty.text.toString(),
+                holder.price.text.toString(),"1",holder.fish_weight.text.toString(),holder.fish_weight.text.toString()
+                ,modelList.get(position).PRODUCT_PRICE)
         }
         holder.ll_add.setOnClickListener {
             count = holder.qty.text.toString().toInt()
@@ -109,7 +112,9 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
             val priceActual = String.format("%.0f", price1)
             holder.price.setText(priceActual)
             addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,
-                holder.qty.text.toString(),holder.price.text.toString(),"1",holder.fish_weight.text.toString())
+                holder.qty.text.toString(),holder.price.text.toString(),"1",holder.fish_weight.text.toString(),
+                holder.fish_weight.text.toString()
+                ,modelList.get(position).PRODUCT_PRICE)
 
 
         }

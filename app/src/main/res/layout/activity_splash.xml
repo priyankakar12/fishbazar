@@ -46,7 +46,7 @@
             android:layout_marginTop="30dp"
             android:textSize="34sp"
             android:fontFamily="@font/bold_mont"
-            android:text="Fresh\n Fish Market"
+            android:text="Fresh\n Fish Bazar"
             android:src="@drawable/fish_market_text" />
 
     </RelativeLayout>

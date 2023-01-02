@@ -63,7 +63,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/medium_mont"
-            android:text="250 gm"
+            android:text="1000g"
             android:textColor="@color/black" />
 
         <ImageView

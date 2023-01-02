@@ -62,7 +62,9 @@ interface ApiInterface {
      @Field("userid") userid: String,
      @Field("price") price: String,
      @Field("status") status: String,
-     @Field("quantity_amount") quantity_amount: String
+     @Field("quantity_amount") quantity_amount: String,
+     @Field("base_amount") base_amount: String,
+     @Field("base_price") base_price: String
  ): Single<Response<RatingModel>>
 
 @FormUrlEncoded
@@ -88,7 +90,11 @@ interface ApiInterface {
         @Field("productid") productid: String,
         @Field("product_quantity") product_quantity: String,
         @Field("userid") userid: String,
-        @Field("price") price: String
+        @Field("price") price: String,
+        @Field("base_amount") base_amount: String,
+        @Field("base_price") base_price: String,
+        @Field("status") status: String
+
 
     ): Single<Response<CartUpdateResponseModel>>
 

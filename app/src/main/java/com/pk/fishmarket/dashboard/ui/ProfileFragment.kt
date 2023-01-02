@@ -29,6 +29,7 @@ class ProfileFragment : Fragment() {
     lateinit var profileUserDetailsViewModel: ProfileUpdateViewModel
     var userid =""
     lateinit var phone_number:TextView
+    lateinit var locate_txt:TextView
     lateinit var location: EditText
     lateinit var email:EditText
     override fun onCreateView(
@@ -42,11 +43,14 @@ class ProfileFragment : Fragment() {
         location=view.findViewById(R.id.location)
         email=view.findViewById(R.id.email)
         updateProfile=view.findViewById(R.id.updateProfile)
+        locate_txt=view.findViewById(R.id.locate_txt)
         userid= SharedPreferencesUtil().getUserId(requireContext()).toString();
         val repository = AppRepository()
         val factory = ViewModelFactory(repository)
         userDetailsViewModel = ViewModelProvider(this, factory)[UserDetailsViewModel::class.java]
         profileUserDetailsViewModel = ViewModelProvider(this, factory)[ProfileUpdateViewModel::class.java]
+        var address= SharedPreferencesUtil().getAddress(requireContext()).toString();
+        locate_txt.text = address
         logout_ll.setOnClickListener {
             var intent= Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)

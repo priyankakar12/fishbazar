@@ -318,9 +318,11 @@ class HomeFragment : Fragment(),AddToCartInterface {
         product_quantity: String,
         price: String,
         status: String,
-        quantity_amount:String
+        quantity_amount:String,
+        base_amount:String,
+        base_price:String
     ) {
-        addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status,quantity_amount)
+        addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status,quantity_amount,base_amount,base_price)
         addToCartViewModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
 

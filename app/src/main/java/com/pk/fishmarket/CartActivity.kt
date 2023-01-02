@@ -175,7 +175,8 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
         product_quantity: String,
         price: String,
         status: String,
-        quantity_amount:String
+        quantity_amount:String,
+        base_amount:String,base_price:String
     ) {
         if(status.equals("4"))
         {
@@ -183,7 +184,7 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
         }
         else
         {
-            updateExistingCart(productid,product_quantity,userid,price)
+            updateExistingCart(productid,product_quantity,userid,price,base_amount,base_price,status)
         }
 
     }
@@ -227,9 +228,17 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
         }
     }
 
-    private fun updateExistingCart(productid: String, productQuantity: String, userid: String, price: String) {
+    private fun updateExistingCart(
+        productid: String,
+        productQuantity: String,
+        userid: String,
+        price: String,
+        base_amount: String,
+        base_price: String,
+        status: String
+    ) {
         arrayList.clear()
-        cartUpdateViewModel.getReviewResponse(productid,productQuantity,userid,price)
+        cartUpdateViewModel.getReviewResponse(productid,productQuantity,userid,price,base_amount,base_price,status)
         cartUpdateViewModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
 
@@ -240,9 +249,20 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
                         response.data?.let { response ->
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
-                                getCartItems(userid)
-                                Toast.makeText(this,"Cart has been updated succesfully",Toast.LENGTH_LONG).show()
-                            } else {
+                                Log.d("productQty",productQuantity)
+                                Log.d("status",status)
+                                if(productQuantity == "1" && status == "0")
+                                {
+                                   deleteCartItem(productid,userid)
+                                }
+                                else
+                                {
+                                    getCartItems(userid)
+                                    Toast.makeText(this,"Cart has been updated succesfully",Toast.LENGTH_LONG).show()
+
+                                }
+
+                                         } else {
 
                                 Toast.makeText(this, "cart is empty", Toast.LENGTH_SHORT)
                                     .show()

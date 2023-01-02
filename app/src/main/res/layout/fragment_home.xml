@@ -115,7 +115,7 @@
                 android:layout_toRightOf="@+id/search_icon"
                 android:background="@null"
                 android:fontFamily="@font/regular_mont"
-                android:hint="Search shop"
+                android:hint="Search product"
                 android:padding="9dp" />
         </RelativeLayout>
 

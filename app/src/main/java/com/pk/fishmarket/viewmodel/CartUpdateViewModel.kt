@@ -17,12 +17,15 @@ class CartUpdateViewModel(val appRepository: AppRepository) : ViewModel(){
     val response : LiveData<Event<Resource<Response<CartUpdateResponseModel>>>> = _userResponse
     private val disposable = CompositeDisposable()
 
-    fun getReviewResponse(productid: String,product_quantity: String,userid: String,price:String) = getRatingData(productid,product_quantity,userid,price)
+    fun getReviewResponse(productid: String,product_quantity: String,userid: String,
+                          price:String,base_amount:String,base_price:String,status:String) =
+        getRatingData(productid,product_quantity,userid,price,base_amount,base_price,status)
 
-    fun getRatingData(productid: String,product_quantity: String,userid: String,price:String){
+    fun getRatingData(productid: String,product_quantity: String,userid: String,price:String ,
+                      base_amount:String,base_price:String,status:String){
         _userResponse.postValue(Event(Resource.Loading()))
         try{
-            disposable.add(appRepository.updateCart(productid,product_quantity,userid,price).subscribeOn(
+            disposable.add(appRepository.updateCart(productid,product_quantity,userid,price,base_amount,base_price,status).subscribeOn(
                 Schedulers.io()).observeOn(
                 Schedulers.io()
             ).subscribe(
