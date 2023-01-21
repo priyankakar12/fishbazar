@@ -16,6 +16,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.pk.fishmarket.Utils.SharedPreferencesUtil
 import com.pk.fishmarket.dashboard.MainActivity
@@ -44,6 +45,7 @@ import androidx.core.content.ContextCompat;
 import java.io.IOException
 import java.text.DateFormat
 import java.util.*
+import kotlin.math.log
 
 class SplashActivity : AppCompatActivity() {
     var userid: String =""
@@ -58,10 +60,10 @@ class SplashActivity : AppCompatActivity() {
     private val FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS: Long = 5000
 
     private val REQUEST_CHECK_SETTINGS = 100
-
+    private lateinit var dialog: AlertDialog
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var mSettingsClient: SettingsClient? = null
-    private var mLocationRequest: com.google.android.gms.location.LocationRequest? = null
+    private var mLocationRequest: LocationRequest? = null
     private var mLocationSettingsRequest: LocationSettingsRequest? = null
     private var mLocationCallback: LocationCallback? = null
     private var mCurrentLocation: Location? = null
@@ -73,9 +75,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         userid = SharedPreferencesUtil().getUserId(this).toString()
-        init();
-        checkAppPermission();
-        checkPermission();
+        init()
+        checkAppPermission()
+        checkPermission()
         restoreValuesFromBundle(savedInstanceState);
         val background: Thread = object : Thread() {
             override fun run() {
@@ -157,14 +159,14 @@ class SplashActivity : AppCompatActivity() {
 
                     if(userid == "") {
                         var intent = Intent(this@SplashActivity, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
-                        finish()
                     }
                     else
                     {
                         var intent = Intent(this@SplashActivity, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
-                        finish()
                     }
 
                 // go_next();
@@ -187,22 +189,24 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun init() {
+        Log.d(TAG, "init: 11111111111")
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mSettingsClient = LocationServices.getSettingsClient(this)
         mLocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 super.onLocationResult(locationResult)
                 // location is received
+                Log.d(TAG, "onLocationResult: 111111")
                 mCurrentLocation = locationResult.lastLocation
-                mLastUpdateTime = DateFormat.getTimeInstance().format(Date())
+
                 updateLocationUI()
             }
         }
         mRequestingLocationUpdates = false
         mLocationRequest = LocationRequest()
-        mLocationRequest?.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS)
-        mLocationRequest?.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS)
-        mLocationRequest?.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        mLocationRequest?.interval = UPDATE_INTERVAL_IN_MILLISECONDS
+        mLocationRequest?.fastestInterval = FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS
+        mLocationRequest?.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         val builder = LocationSettingsRequest.Builder()
         builder.addLocationRequest(mLocationRequest!!)
         mLocationSettingsRequest = builder.build()
@@ -224,6 +228,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun updateLocationUI() {
+        Log.d(TAG, "updateLocationUI: 000000")
         if (mCurrentLocation != null) {
             val lat = mCurrentLocation!!.getLatitude()
             val lng = mCurrentLocation!!.getLongitude()
@@ -398,10 +403,15 @@ class SplashActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        Log.d("onActivityResult","onActivityResult111")
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_CHECK_SETTINGS -> when (resultCode) {
-                RESULT_OK -> Log.e(TAG, "User agreed to make required location settings changes.")
+                RESULT_OK -> {
+                    Log.e(TAG, "User agreed to make required location settings changes.")
+                    mRequestingLocationUpdates = true
+                    checkPermission()
+                }
                 RESULT_CANCELED -> {
                     Log.e(TAG, "User chose not to make required location settings changes.")
                     mRequestingLocationUpdates = false
@@ -410,14 +420,41 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkPermissions(): Boolean {
-        val permissionState: Int = ActivityCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-        return permissionState == PackageManager.PERMISSION_GRANTED
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        Log.d("onRequestPermission","onRequestPermissionsResult")
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            if (grantResults.isNotEmpty()
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
+               // updateLocationUI()
+
+            } else {
+                val builder = AlertDialog.Builder(this)
+                builder.setMessage("App required some permission please enable it")
+                    .setPositiveButton(
+                        "Yes"
+                    ) { dialog, id -> openPermissionScreen() }
+                    .setNegativeButton(
+                        "Cancel"
+                    ) { dialog, id -> // User cancelled the dialog
+                        dialog.dismiss()
+                    }
+                dialog = builder.show()
+            }
+            return
+        }
     }
 
+    fun openPermissionScreen() {
+        // startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", this.packageName, null)
+        )
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+    }
 
     override fun onPause() {
         super.onPause()

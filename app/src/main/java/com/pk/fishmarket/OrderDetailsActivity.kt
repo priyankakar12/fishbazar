@@ -1,30 +1,27 @@
 package com.pk.fishmarket
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.pk.fishmarket.Adapter.CartAdapter
 import com.pk.fishmarket.Adapter.OrderDetailsAdapter
 import com.pk.fishmarket.ResponseModel.PRODUCT_DETAILS
 import com.pk.fishmarket.Utils.Resource
 import com.pk.fishmarket.Utils.SharedPreferencesUtil
 import com.pk.fishmarket.repository.AppRepository
-import com.pk.fishmarket.viewmodel.GetCartDetailsViewModel
 import com.pk.fishmarket.viewmodel.OrderCancelViewModel
 import com.pk.fishmarket.viewmodel.OrderDetailsViewModel
 import com.pk.fishmarket.viewmodel.ViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class OrderDetailsActivity : AppCompatActivity() {
     var orderid= ""
@@ -134,16 +131,35 @@ class OrderDetailsActivity : AppCompatActivity() {
 
                                 val df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                                 val formattedDate: String = df.format(c)
+                                val dateCompare = df.parse(formattedDate)
                                 var deliveryDate = response.body()!!.ORDER_DETAILS[0].DELIVARY_DATE
+                                val format = SimpleDateFormat("dd-MM-yyyy",Locale.getDefault())
                                 var orderStatus = response.body()!!.ORDER_DETAILS[0].ORDER_STATUS
-                                if(orderStatus == "CANCEL")
+                                try {
+                                    val date = format.parse(deliveryDate)
+
+
+                                    if(date.compareTo(dateCompare) < 0 || orderStatus == "CANCEL")
+                                    {
+                                        submit_ll.visibility = View.GONE
+                                    }
+                                    else
+                                    {
+                                        submit_ll.visibility = View.VISIBLE
+                                    }
+
+                                } catch (e:Exception) {
+                                    e.printStackTrace()
+                                }
+
+                              /*  if(orderStatus == "CANCEL")
                                 {
                                     submit_ll.visibility = View.GONE
                                 }
                                 else
                                 {
                                     submit_ll.visibility = View.VISIBLE
-                                }
+                                }*/
                                 if(response.body()!!.ORDER_DETAILS[0].DELIVARY_STATUS == "0")
                                 {
                                     orderstats.text= "Not Delivered"
@@ -159,14 +175,14 @@ class OrderDetailsActivity : AppCompatActivity() {
                                     orderstats.text= "Pending"
                                     orderstats.setTextColor(ContextCompat.getColor(this,R.color.grey))
                                 }
-                                if(deliveryDate == formattedDate)
+                               /* if(deliveryDate == formattedDate)
                                 {
                                     submit_ll.visibility = View.VISIBLE
                                 }
                                 else
                                 {
                                     submit_ll.visibility = View.GONE
-                                }
+                                }*/
                                 name.text = response.body()!!.ORDER_DETAILS[0].ADDRESS_DETAILS[0].NAME
                                 phone_number.text = phone
                                 order_id.text = "Order Id : "+response.body()!!.ORDER_DETAILS[0].ORDER_ID

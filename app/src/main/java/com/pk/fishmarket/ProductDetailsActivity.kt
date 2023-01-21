@@ -51,6 +51,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     var shopid =""
     var popup: PopupWindow? = null
     var userid =""
+    var price_up= "0"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
@@ -118,7 +119,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                 Log.e("QTYyy111", "" + productQty)
             }
             val actualPrice: String = java.lang.String.valueOf(
-                price.text.toString()
+                price_up
             )
             val actprice = actualPrice.toFloat()
             var price1 = 0f
@@ -133,7 +134,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                 count--
                 qty.text = count.toString()
                 val actualPrice: String = java.lang.String.valueOf(
-                   price.text.toString()
+                    price_up
                 )
                 val actprice = actualPrice.toFloat()
                 var price1 = 0f
@@ -152,13 +153,26 @@ class ProductDetailsActivity : AppCompatActivity() {
         }
         }
         submit_ll.setOnClickListener {
+            var qty_updated="0"
+            if(fish_weight.text.toString() == "1000g")
+            {
+                qty_updated="1000"
+            }
+            else if(fish_weight.text.toString() == "500g")
+            {
+                qty_updated="500"
+            }
+            else
+            {
+                qty_updated="250"
+            }
         addtocart(productid,
             shopid,
             qty.text.toString(),
             userid,
             price.text.toString(),
             "1",
-        fish_weight.text.toString())
+        fish_weight.text.toString(),qty_updated)
         }
         amt_ll.setOnClickListener {
            var  weightArr :ArrayList<String> = ArrayList()
@@ -170,9 +184,10 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     private fun addtocart(productid: String, shopid: String, product_quantity: String,userid:String, price: String,
-                          status: String,quantity_amount:String) {
+                          status: String,quantity_amount:String,qty_updated:String) {
+
         addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status,
-            quantity_amount,"1000g", priceNew)
+            qty_updated,quantity_amount, priceNew)
         addToCartViewModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
 
@@ -294,6 +309,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                             if (response.body()!!.status == 200) {
                                 item_title.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_NAME
                                 item_quantity.text = "1000g"
+                                price_up=response.body()!!.PRODUCT_DETAILS[0].PRODUCT_PRICE
                                 price.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_PRICE
                                 priceNew = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_PRICE
                                 description_txt.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_DESC

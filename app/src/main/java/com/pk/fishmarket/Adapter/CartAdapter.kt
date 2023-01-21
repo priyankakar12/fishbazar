@@ -47,9 +47,9 @@ class CartAdapter (private val context: Context, private val modelList: ArrayLis
 
     override fun onBindViewHolder(holder: CartAdapter.ViewHolder, position: Int) {
 
-        holder.fish_weight.text = modelList[position].BASE_AMOUNT+" gms"
+        holder.fish_weight.text = modelList[position].BASE_AMOUNT+" gms" +" x "+modelList[position].PRODUCT_QUANTITY
         holder.shop_name.text = modelList[position].PRODUCT_TITLE
-        holder.qty.text = modelList[position].PRODUCT_QUANTITY
+        holder.qty.text =  modelList[position].PRODUCT_QUANTITY
         holder.price.text = modelList[position].PRODUCT_PRICE
         Log.d("gvuvu",modelList[position].PRODUCT_PRICE)
         holder.img_delete.setOnClickListener{

@@ -355,6 +355,7 @@ class NearbyShopActivity : AppCompatActivity(),AddToCartInterface {
         status: String,quantity_amount:String,
         base_amount:String,base_price:String
     ) {
+        Log.d("quantity_amount",quantity_amount)
         addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status,quantity_amount,base_amount,base_price)
         addToCartViewModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->

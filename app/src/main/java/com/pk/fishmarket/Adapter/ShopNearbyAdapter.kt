@@ -75,9 +75,22 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
            holder.quantity_layout.visibility = View.VISIBLE
            holder.add_ll.visibility = View.GONE
             Log.d("onClick","Clicked")
+            var quantity_amount = ""
+            if(holder.fish_weight.text.toString() == "1000g")
+            {
+                quantity_amount="1000"
+            }
+            else if(holder.fish_weight.text.toString() == "500g")
+            {
+                quantity_amount="500"
+            }
+            else
+            {
+                quantity_amount="250"
+            }
             addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,
                 modelList.get(position).SHOP_ID,holder.qty.text.toString(),
-                holder.price.text.toString(),"1",holder.fish_weight.text.toString(),holder.fish_weight.text.toString()
+                holder.price.text.toString(),"1",quantity_amount,holder.fish_weight.text.toString()
                 ,modelList.get(position).PRODUCT_PRICE)
         }
         holder.ll_add.setOnClickListener {
@@ -111,8 +124,22 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
             price1 = actprice * count
             val priceActual = String.format("%.0f", price1)
             holder.price.setText(priceActual)
+            var quantity_amount = ""
+
+            if(holder.fish_weight.text.toString() == "1000g")
+            {
+                quantity_amount="1000"
+            }
+            else if(holder.fish_weight.text.toString() == "500g")
+            {
+                quantity_amount="500"
+            }
+            else
+            {
+                quantity_amount="250"
+            }
             addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,
-                holder.qty.text.toString(),holder.price.text.toString(),"1",holder.fish_weight.text.toString(),
+                holder.qty.text.toString(),holder.price.text.toString(),"1",quantity_amount,
                 holder.fish_weight.text.toString()
                 ,modelList.get(position).PRODUCT_PRICE)
 
