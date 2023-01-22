@@ -161,7 +161,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/semibold_mont"
             android:textSize="16sp"
-            android:text="All shops delivering fresh fish"
+            android:text="Fresh Fish Items"
             android:textColor="@color/black"
             />
 

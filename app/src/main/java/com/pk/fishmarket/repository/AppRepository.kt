@@ -5,7 +5,7 @@ import retrofit2.http.Field
 
 
 class AppRepository {
-    fun userLogin(user_email : String,user_pass:String) = RetrofitClient.apiInterface.userLogin(user_email,user_pass)
+    fun userLogin(phonenumber : String,user_pass:String) = RetrofitClient.apiInterface.userLogin(phonenumber,user_pass)
     fun userRegister(phonenumber : String,username: String,email: String,user_pass:String,user_con_pass:String,firstname:String,lastname:String
     ) = RetrofitClient.apiInterface.userRegister(phonenumber,username,email,user_pass,user_con_pass,firstname,lastname)
 

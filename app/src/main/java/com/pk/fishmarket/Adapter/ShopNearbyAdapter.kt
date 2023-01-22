@@ -37,6 +37,7 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
         var quantity_layout = itemView.findViewById<RelativeLayout>(R.id.quantity_layout)
         var add_ll = itemView.findViewById<RelativeLayout>(R.id.add_ll)
         var product_img = itemView.findViewById<ImageView>(R.id.product_img)
+        var shop_stock = itemView.findViewById<TextView>(R.id.shop_stock)
 
 
     }
@@ -55,6 +56,9 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
         var url="http://freshfishbazar.com/Fishbazar/uploads/Product_image/"+modelList[position].PRODUCT_IMAGE
         Picasso.get().load(url).into(holder.product_img)
         holder.shop_name.text = modelList[position].PRODUCT_NAME
+        holder.shop_stock.text = "Stock: "+modelList[position].PRODUCT_STOCK
+
+        var PRODUCT_STOCK = modelList[position].PRODUCT_STOCK.toInt()
         holder.amt_ll.setOnClickListener {
             weightArr = ArrayList()
             weightArr.add("1000g")
@@ -105,43 +109,53 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
 //                    // holder.add.setClickable(false);
 //                    Toast.makeText(context, "Sorry current stock does not contain this amount.", Toast.LENGTH_SHORT).show();
 //                } else {
-            count = count + 1
-            holder.qty.text = count.toString()
-            productQty = holder.qty.text.toString().toInt()
-
-            if (productQty >= 2) {
-                //minus_jar.setEnabled(false);
-                Log.e("QTYyy", "" + productQty)
-            } else {
-                //minus_jar.setEnabled(true);
-                Log.e("QTYyy111", "" + productQty)
-            }
-            val actualPrice: String = java.lang.String.valueOf(
-                modelList[position].PRODUCT_PRICE
-            )
-            val actprice = actualPrice.toFloat()
-            var price1 = 0f
-            price1 = actprice * count
-            val priceActual = String.format("%.0f", price1)
-            holder.price.setText(priceActual)
-            var quantity_amount = ""
-
-            if(holder.fish_weight.text.toString() == "1000g")
+            if(count == PRODUCT_STOCK)
             {
-                quantity_amount="1000"
-            }
-            else if(holder.fish_weight.text.toString() == "500g")
-            {
-                quantity_amount="500"
+             Toast.makeText(context,"This quantity is not available in stock",Toast.LENGTH_SHORT).show()
             }
             else
             {
-                quantity_amount="250"
+                count = count + 1
+                holder.qty.text = count.toString()
+                productQty = holder.qty.text.toString().toInt()
+
+                if (productQty >= 2) {
+                    //minus_jar.setEnabled(false);
+                    Log.e("QTYyy", "" + productQty)
+                }
+                else {
+                    //minus_jar.setEnabled(true);
+                    Log.e("QTYyy111", "" + productQty)
+                }
+
+                val actualPrice: String = java.lang.String.valueOf(
+                    modelList[position].PRODUCT_PRICE
+                )
+                val actprice = actualPrice.toFloat()
+                var price1 = 0f
+                price1 = actprice * count
+                val priceActual = String.format("%.0f", price1)
+                holder.price.setText(priceActual)
+                var quantity_amount = ""
+
+                if(holder.fish_weight.text.toString() == "1000g")
+                {
+                    quantity_amount="1000"
+                }
+                else if(holder.fish_weight.text.toString() == "500g")
+                {
+                    quantity_amount="500"
+                }
+                else
+                {
+                    quantity_amount="250"
+                }
+                addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,
+                    holder.qty.text.toString(),holder.price.text.toString(),"1",quantity_amount,
+                    holder.fish_weight.text.toString()
+                    ,modelList.get(position).PRODUCT_PRICE)
             }
-            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,
-                holder.qty.text.toString(),holder.price.text.toString(),"1",quantity_amount,
-                holder.fish_weight.text.toString()
-                ,modelList.get(position).PRODUCT_PRICE)
+
 
 
         }

@@ -153,7 +153,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/medium_mont"
                 android:text=""
-                android:textColor="#979797"
+                android:textColor="@color/blue"
                 android:textSize="16sp" />
 
             <TextView
@@ -188,6 +188,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/regular_mont"
                 android:text="Sales name"
+                android:visibility="gone"
                 android:textColor="@color/grey"
                 android:layout_marginRight="15dp"
                 android:textSize="14sp" />

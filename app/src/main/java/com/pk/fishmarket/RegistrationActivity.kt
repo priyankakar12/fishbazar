@@ -3,6 +3,7 @@ package com.pk.fishmarket
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.widget.EditText
 import android.widget.RelativeLayout
@@ -17,6 +18,8 @@ import retrofit2.http.Field
 
 class RegistrationActivity : AppCompatActivity() {
     lateinit var gotoLogin:TextView
+    lateinit var hideShowPwd:TextView
+    lateinit var hideShowPwd1:TextView
     lateinit var submit_ll:RelativeLayout
     lateinit var first_name_edt:EditText
     lateinit var last_name_edt:EditText
@@ -25,10 +28,14 @@ class RegistrationActivity : AppCompatActivity() {
     lateinit var conpassword_edt:EditText
     lateinit var email_edt:TextView
     private lateinit var registrationViewModel: RegistrationViewModel
+    var hidePwd =false
+    var hidePwd1 =false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
         gotoLogin = findViewById(R.id.gotoLogin)
+        hideShowPwd1 = findViewById(R.id.hideShowPwd1)
+        hideShowPwd = findViewById(R.id.hideShowPwd)
         email_edt = findViewById(R.id.email_edt)
         first_name_edt = findViewById(R.id.first_name_edt)
         last_name_edt = findViewById(R.id.last_name_edt)
@@ -41,6 +48,37 @@ class RegistrationActivity : AppCompatActivity() {
         registrationViewModel = ViewModelProvider(this, factory)[RegistrationViewModel::class.java]
         gotoLogin.setOnClickListener {
             startActivity(Intent(this@RegistrationActivity,LoginActivity::class.java))
+        }
+        hideShowPwd.setOnClickListener {
+            if(!hidePwd)
+            {
+                password_edt.transformationMethod = null;
+
+                hideShowPwd.text = "Hide"
+                hidePwd = true
+            }
+            else
+            {
+                password_edt.transformationMethod = PasswordTransformationMethod()
+                hideShowPwd.text = "Show"
+                hidePwd = false
+            }
+        }
+        hideShowPwd1.setOnClickListener {
+
+            if(!hidePwd1)
+            {
+                conpassword_edt.transformationMethod = null;
+
+                hideShowPwd1.text = "Hide"
+                hidePwd1 = true
+            }
+            else
+            {
+                conpassword_edt.transformationMethod = PasswordTransformationMethod()
+                hideShowPwd1.text = "Show"
+                hidePwd1 = false
+            }
         }
         submit_ll.setOnClickListener {
         var phonenumber = phone_number_edt.text.toString()

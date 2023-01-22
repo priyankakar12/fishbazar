@@ -251,7 +251,7 @@
                 android:inputType="textPassword"
                 android:textCursorDrawable="@drawable/black_cursor"
                 android:id="@+id/password_edt"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
@@ -260,10 +260,25 @@
                 android:hint="Password"
                 android:textColor="@color/lightgrey"
                 android:textColorHint="@color/whitegrey"
-                android:layout_toLeftOf="@+id/rl_password"
                 android:layout_marginRight="10dp"
                 android:singleLine="true"
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/hideShowPwd"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toLeftOf="@+id/rl_password"
+                android:fontFamily="@font/semibold_mont"
+                android:text="Show"
+                android:textColor="@color/blue" />
+
 
             <RelativeLayout
                 android:id="@+id/rl_password"
@@ -296,7 +311,7 @@
                 android:inputType="textPassword"
                 android:textCursorDrawable="@drawable/black_cursor"
                 android:id="@+id/conpassword_edt"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
@@ -305,10 +320,27 @@
                 android:hint="Confirm Password"
                 android:textColor="@color/lightgrey"
                 android:textColorHint="@color/whitegrey"
-                android:layout_toLeftOf="@+id/rl_conpassword"
+
                 android:layout_marginRight="10dp"
                 android:singleLine="true"
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/hideShowPwd1"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toLeftOf="@+id/rl_conpassword"
+                android:fontFamily="@font/semibold_mont"
+                android:text="Show"
+                android:textColor="@color/blue" />
+
+
 
             <RelativeLayout
                 android:id="@+id/rl_conpassword"

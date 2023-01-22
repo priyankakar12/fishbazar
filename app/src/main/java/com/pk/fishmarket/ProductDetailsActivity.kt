@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pk.fishmarket.Adapter.MoreLikeThisAdapter
 import com.pk.fishmarket.ResponseModel.RelatedProducts
@@ -52,7 +53,8 @@ class ProductDetailsActivity : AppCompatActivity() {
     var popup: PopupWindow? = null
     var userid =""
     var price_up= "0"
-    override fun onCreate(savedInstanceState: Bundle?) {
+    var PRODUCT_STOCK =""
+        override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
         popup = PopupWindow(this);
@@ -95,8 +97,10 @@ class ProductDetailsActivity : AppCompatActivity() {
             cart_count.visibility = View.VISIBLE
             tv_count.text = SharedPreferencesUtil().getCartCount(this)
         }
+
         ll_add.setOnClickListener {
             count = qty.text.toString().toInt()
+            var stock = PRODUCT_STOCK.toInt()
 //                int quantity1 = Integer.parseInt(modelList.get(position).getVariationList().get(0).);
 //                if (count >= quantity1) {
 //                    // holder.add.setClickable(false);
@@ -107,25 +111,33 @@ class ProductDetailsActivity : AppCompatActivity() {
 //                    // holder.add.setClickable(false);
 //                    Toast.makeText(context, "Sorry current stock does not contain this amount.", Toast.LENGTH_SHORT).show();
 //                } else {
-            count = count + 1
-            qty.text = count.toString()
-            productQty =qty.text.toString().toInt()
-
-            if (productQty >= 2) {
-                //minus_jar.setEnabled(false);
-                Log.e("QTYyy", "" + productQty)
-            } else {
-                //minus_jar.setEnabled(true);
-                Log.e("QTYyy111", "" + productQty)
+            if(count == stock)
+            {
+                Toast.makeText(this,"This quantity is not available in stock",Toast.LENGTH_SHORT).show()
             }
-            val actualPrice: String = java.lang.String.valueOf(
-                price_up
-            )
-            val actprice = actualPrice.toFloat()
-            var price1 = 0f
-            price1 = actprice * count
-            val priceActual = String.format("%.0f", price1)
-            price.setText(priceActual)
+            else
+            {
+                count = count + 1
+                qty.text = count.toString()
+                productQty =qty.text.toString().toInt()
+
+                if (productQty >= 2) {
+                    //minus_jar.setEnabled(false);
+                    Log.e("QTYyy", "" + productQty)
+                } else {
+                    //minus_jar.setEnabled(true);
+                    Log.e("QTYyy111", "" + productQty)
+                }
+                val actualPrice: String = java.lang.String.valueOf(
+                    price_up
+                )
+                val actprice = actualPrice.toFloat()
+                var price1 = 0f
+                price1 = actprice * count
+                val priceActual = String.format("%.0f", price1)
+                price.setText(priceActual)
+            }
+
 
         }
         ll_minus.setOnClickListener {
@@ -308,16 +320,24 @@ class ProductDetailsActivity : AppCompatActivity() {
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
                                 item_title.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_NAME
-                                item_quantity.text = "1000g"
+                                PRODUCT_STOCK = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_STOCK
+                                item_quantity.text = "Stock : " + PRODUCT_STOCK
                                 price_up=response.body()!!.PRODUCT_DETAILS[0].PRODUCT_PRICE
                                 price.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_PRICE
                                 priceNew = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_PRICE
                                 description_txt.text = response.body()!!.PRODUCT_DETAILS[0].PRODUCT_DESC
                                 shopid = response.body()!!.PRODUCT_DETAILS[0].SHOP_ID
+
                                 var url="http://freshfishbazar.com/Fishbazar/uploads/Product_image/"+response.body()!!.PRODUCT_DETAILS[0].PRODUCT_IMAGE
                                 Picasso.get().load(url).into(imgView)
                                 arrayMore = response.body()!!.RELATED_PRODUCTS
                                 moreLikeThisAdapter = MoreLikeThisAdapter(this@ProductDetailsActivity, arrayMore)
+                                val horizontallLayoutManagaer = LinearLayoutManager(
+                                    this@ProductDetailsActivity,
+                                    LinearLayoutManager.HORIZONTAL,
+                                    false
+                                )
+                                rec_more.setLayoutManager(horizontallLayoutManagaer)
                                 rec_more.adapter = moreLikeThisAdapter
 
                             } else {

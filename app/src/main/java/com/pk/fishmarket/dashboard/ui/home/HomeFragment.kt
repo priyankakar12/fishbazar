@@ -40,7 +40,7 @@ class HomeFragment : Fragment(),AddToCartInterface {
     private val binding get() = _binding!!
     lateinit var homeAdapter:HomeAdapter
     var arraySearchList:ArrayList<ShopResponse> = ArrayList()
-    var arrayList:ArrayList<ShopList> = ArrayList()
+    var arrayList:ArrayList<ShopResponse> = ArrayList()
     lateinit var dashboardViewModel: DashboardViewModel
     var address = ""
     var state = ""
@@ -53,6 +53,7 @@ class HomeFragment : Fragment(),AddToCartInterface {
     //lateinit var  searchItemViewModel: SearchShopViewModel
     lateinit var  searchItemViewModel: SearchItemViewModel
     lateinit var  addToCartViewModel: AddToCartViewModel
+    lateinit var  shoplistViewModel:ShopListViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -74,9 +75,12 @@ class HomeFragment : Fragment(),AddToCartInterface {
         searchItemViewModel = ViewModelProvider(this, factory)[SearchItemViewModel::class.java]
         dashboardViewModel = ViewModelProvider(this, factory)[DashboardViewModel::class.java]
         addToCartViewModel = ViewModelProvider(this, factory)[AddToCartViewModel::class.java]
+        shoplistViewModel = ViewModelProvider(this, factory)[ShopListViewModel::class.java]
+
         if (InternetConnection.isConnected(requireContext())) {
 
           getData(userid,latitude,longitude)
+            getShoplist("5")
 
         } else {
           Toast.makeText(requireContext(),"no internet connection",Toast.LENGTH_SHORT).show()
@@ -117,10 +121,52 @@ class HomeFragment : Fragment(),AddToCartInterface {
         }
         return root
     }
+    private fun getShoplist(shopId: String) {
+        arrayList.clear()
+        shoplistViewModel.getShopListResponse(shopId)
+        shoplistViewModel.response.observe(requireActivity()) { event ->
+            event.getContentIfNotHandled()?.let { response ->
 
+                when (response) {
+
+                    is Resource.Success -> {
+                        arrayList.clear()
+                        response.data?.let { response ->
+                            Log.d("response", response.toString())
+                            if (response.body()!!.status == 200) {
+                                arrayList= response.body()!!.PRODUCT_LIST
+                                shopNearbyAdapter = ShopNearbyAdapter(requireContext(), arrayList,this)
+                                binding.recShops.adapter = shopNearbyAdapter
+                                binding.recShops.itemAnimator = DefaultItemAnimator()
+                                binding.recShops.layoutManager = GridLayoutManager(requireContext(), 1)
+
+                            } else {
+
+                                Toast.makeText(requireContext(), "no data found", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+
+                        }
+                    }
+                    is Resource.Error -> {
+                        arrayList.clear()
+                        response.message?.let { message ->
+
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    is Resource.Loading -> {
+
+                    }
+                }
+            }
+        }
+    }
     override fun onResume() {
         super.onResume()
         getData(userid,latitude,longitude)
+        getShoplist("5")
         if(SharedPreferencesUtil().getCartCount(requireContext()) == "")
         {
             binding.cartCount.visibility = View.GONE
@@ -276,12 +322,12 @@ class HomeFragment : Fragment(),AddToCartInterface {
                             if (response.body()!!.status == 200) {
                                 var cart_total = response.body()!!.cart_total
                                 SharedPreferencesUtil().saveCartCount(cart_total,requireContext())
-                                arrayList = response.body()!!.SHOP_LIST
+                              /*  arrayList = response.body()!!.SHOP_LIST
                                 homeAdapter = HomeAdapter(requireContext(), arrayList)
                                 binding.recShops.adapter = homeAdapter
                                 binding.recShops.itemAnimator = DefaultItemAnimator()
                                 binding.recShops.layoutManager = GridLayoutManager(requireContext(), 1)
-
+*/
 
                             } else {
 

@@ -12,7 +12,7 @@ import retrofit2.http.POST
 interface ApiInterface {
     @FormUrlEncoded
     @POST("Shop_user/login")
-    fun userLogin(@Field("user_email") user_email: String,@Field("user_pass") user_pass:String): Single<Response<LoginResponseModel>>
+    fun userLogin(@Field("phonenumber") phonenumber: String,@Field("user_pass") user_pass:String): Single<Response<LoginResponseModel>>
 
     @FormUrlEncoded
     @POST("Shop_user/user_signup")

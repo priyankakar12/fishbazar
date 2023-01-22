@@ -1,22 +1,22 @@
 package com.pk.fishmarket
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.pk.fishmarket.Utils.InternetConnection
 import com.pk.fishmarket.Utils.Resource
-import com.pk.fishmarket.Utils.showToast
+import com.pk.fishmarket.Utils.SharedPreferencesUtil
+import com.pk.fishmarket.dashboard.MainActivity
 import com.pk.fishmarket.repository.AppRepository
 import com.pk.fishmarket.viewmodel.LoginViewModel
 import com.pk.fishmarket.viewmodel.ViewModelFactory
-import com.google.android.material.snackbar.Snackbar
-import com.pk.fishmarket.Utils.SharedPreferencesUtil
-import com.pk.fishmarket.dashboard.MainActivity
+
 
 class LoginActivity : AppCompatActivity(),View.OnClickListener {
     lateinit var submit_ll : RelativeLayout
@@ -25,11 +25,13 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     lateinit var password_edt : EditText
     lateinit var progress_circular : ProgressBar
     lateinit var send_otp_txt : TextView
+    lateinit var hideShowPwd : TextView
     lateinit var sign_in : TextView
     private lateinit var loginViewModel: LoginViewModel
     var cancel = false
     var focusView: View? = null
     var mSnackbar: Snackbar? = null
+    var hidePwd = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +43,12 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         progress_circular =findViewById(R.id.progress_circular);
         send_otp_txt =findViewById(R.id.send_otp_txt);
         sign_in =findViewById(R.id.sign_in);
+        hideShowPwd =findViewById(R.id.hideShowPwd);
         val repository = AppRepository()
         val factory = ViewModelFactory(repository)
         loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
         submit_ll.setOnClickListener(this)
+        hideShowPwd.setOnClickListener(this)
         sign_in.setOnClickListener {
             startActivity(Intent(this@LoginActivity,RegistrationActivity::class.java))
         }
@@ -87,6 +91,22 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
 
 
 
+           }
+           R.id.hideShowPwd->{
+
+               if(!hidePwd)
+               {
+                   password_edt.transformationMethod = null;
+
+                   hideShowPwd.text = "Hide"
+                   hidePwd = true
+               }
+               else
+               {
+                   password_edt.transformationMethod = PasswordTransformationMethod()
+                   hideShowPwd.text = "Show"
+                   hidePwd = false
+               }
            }
 
        }

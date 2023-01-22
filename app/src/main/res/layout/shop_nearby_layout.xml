@@ -45,11 +45,21 @@
         android:textColor="@color/black" />
 
 
+    <TextView
+        android:id="@+id/shop_stock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/medium_mont"
+        android:layout_below="@+id/shop_name"
+        android:text="Anu Meat Shop"
+        android:textColor="@color/blue" />
     <RelativeLayout
         android:id="@+id/amt_ll"
         android:layout_width="90dp"
         android:layout_height="30dp"
-        android:layout_below="@+id/shop_name"
+        android:layout_below="@+id/shop_stock"
 
         android:layout_marginLeft="5dp"
         android:layout_marginTop="9dp"
@@ -100,7 +110,8 @@
         android:layout_toRightOf="@+id/currencyicon"
         android:fontFamily="@font/semibold_mont"
         android:text="150"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:layout_marginBottom="5dp"/>
 
 
     <RelativeLayout

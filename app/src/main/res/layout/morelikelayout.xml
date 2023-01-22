@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="210dp"
+    android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:id="@+id/main_ll"
     app:cardCornerRadius="8dp"
@@ -20,7 +20,7 @@
             <ImageView
                 android:id="@+id/product_img"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="100dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/demo_image"/>
         </androidx.cardview.widget.CardView>
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/medium_mont"
-                android:text="250 gm"
+                android:text="1000g"
                 android:textColor="#979797" />
 
             <ImageView
