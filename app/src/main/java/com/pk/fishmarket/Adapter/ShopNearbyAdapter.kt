@@ -24,7 +24,7 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
     var productQty = 0
     var count = 0
     var popup: PopupWindow? = null
-    class ViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView){
         var shop_name = itemView.findViewById<TextView>(R.id.shop_name)
 
         var price = itemView.findViewById<TextView>(R.id.price)
@@ -53,29 +53,30 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
     }
 
     override fun onBindViewHolder(holder: ShopNearbyAdapter.ViewHolder, position: Int) {
+        val itemHolder = holder as ViewHolder
         var url="http://freshfishbazar.com/Fishbazar/uploads/Product_image/"+modelList[position].PRODUCT_IMAGE
         Picasso.get().load(url).into(holder.product_img)
-        holder.shop_name.text = modelList[position].PRODUCT_NAME
-        holder.shop_stock.text = "Stock: "+modelList[position].PRODUCT_STOCK
+        itemHolder.shop_name.text = modelList[position].PRODUCT_NAME
+        itemHolder.shop_stock.text = "Stock: "+modelList[position].PRODUCT_STOCK
 
         var PRODUCT_STOCK = modelList[position].PRODUCT_STOCK.toInt()
-        holder.amt_ll.setOnClickListener {
+        itemHolder.amt_ll.setOnClickListener {
             weightArr = ArrayList()
             weightArr.add("1000g")
             weightArr.add("500g")
             weightArr.add("250g")
-            showDialog(weightArr,holder,modelList[position].PRODUCT_PRICE)
+            showDialog(weightArr,itemHolder,modelList[position].PRODUCT_PRICE)
         }
         //holder.price.text = modelList[position].PRODUCT_PRICE
         var priceNew = modelList[position].PRODUCT_PRICE.toString().toInt()
         var priceUpdated = priceNew / 4
-        holder.price.text = modelList[position].PRODUCT_PRICE.toString()
-        holder.shop_name.setOnClickListener {
+        itemHolder.price.text = modelList[position].PRODUCT_PRICE.toString()
+        itemHolder.shop_name.setOnClickListener {
             var intent = Intent(context,ProductDetailsActivity::class.java)
             intent.putExtra("productid",modelList.get(position).PRODUCT_ID)
             context.startActivity(intent)
         }
-        holder.add_ll.setOnClickListener {
+        itemHolder.add_ll.setOnClickListener {
            holder.quantity_layout.visibility = View.VISIBLE
            holder.add_ll.visibility = View.GONE
             Log.d("onClick","Clicked")
@@ -93,11 +94,11 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
                 quantity_amount="250"
             }
             addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,
-                modelList.get(position).SHOP_ID,holder.qty.text.toString(),
-                holder.price.text.toString(),"1",quantity_amount,holder.fish_weight.text.toString()
+                modelList.get(position).SHOP_ID,itemHolder.qty.text.toString(),
+                itemHolder.price.text.toString(),"1",quantity_amount,itemHolder.fish_weight.text.toString()
                 ,modelList.get(position).PRODUCT_PRICE)
         }
-        holder.ll_add.setOnClickListener {
+        itemHolder.ll_add.setOnClickListener {
             count = holder.qty.text.toString().toInt()
 //                int quantity1 = Integer.parseInt(modelList.get(position).getVariationList().get(0).);
 //                if (count >= quantity1) {
@@ -151,15 +152,15 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
                     quantity_amount="250"
                 }
                 addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,modelList.get(position).SHOP_ID,
-                    holder.qty.text.toString(),holder.price.text.toString(),"1",quantity_amount,
-                    holder.fish_weight.text.toString()
+                    itemHolder.qty.text.toString(),itemHolder.price.text.toString(),"1",quantity_amount,
+                    itemHolder.fish_weight.text.toString()
                     ,modelList.get(position).PRODUCT_PRICE)
             }
 
 
 
         }
-        holder.ll_minus.setOnClickListener {
+        itemHolder.ll_minus.setOnClickListener {
             /*count = holder.qty.text.toString().toInt()
             if (count > 1) {
                 count--
@@ -187,7 +188,9 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
             Toast.makeText(context, "Please go to cart for updating.", Toast.LENGTH_SHORT).show()
         }
     }
-
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
     private fun showDialog(weightArr: ArrayList<String>, holder: ViewHolder, productPrice: String) {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout: View = layoutInflater.inflate(R.layout.popup_layout_state, null, false)
