@@ -129,7 +129,9 @@ class CartAdapter (private val context: Context, private val modelList: ArrayLis
     }
 
 
-
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
     override fun getItemCount(): Int {
         return modelList.size

@@ -4,22 +4,18 @@ package com.pk.fishmarket
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pk.fishmarket.Adapter.AddressAdapter
-import com.pk.fishmarket.Adapter.OrderHistoryAdapter
 import com.pk.fishmarket.ResponseModel.AddressDetails
 import com.pk.fishmarket.Utils.AddressInterface
 import com.pk.fishmarket.Utils.Resource
@@ -31,7 +27,6 @@ import com.razorpay.PaymentResultListener
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInterface {
@@ -65,6 +60,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
     var payment_mode = ""
     var delivery_date = ""
     var order_date = ""
+    var order_time = ""
     var total_price = ""
 
     lateinit var total:TextView
@@ -72,6 +68,8 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
     lateinit var saved_address_ll:LinearLayout
     lateinit var add_address_ll:RelativeLayout
     lateinit var rl_shipping_address:RelativeLayout
+    lateinit var rl_time:RelativeLayout
+    lateinit var time_txt:TextView
     lateinit var delivery:TextView
     lateinit var subtotal:TextView
     lateinit var date_txt:TextView
@@ -83,6 +81,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
     var items_list :ArrayList<HashMap<String,String>> = ArrayList()
     var addressArrayList :ArrayList<AddressDetails> = ArrayList()
     var cal = Calendar.getInstance()
+    var aTime =""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
@@ -111,6 +110,8 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
         addressList=findViewById(R.id.addressList)
         add_address_ll=findViewById(R.id.add_address_ll)
         rl_shipping_address=findViewById(R.id.rl_shipping_address)
+        rl_time=findViewById(R.id.rl_time)
+        time_txt=findViewById(R.id.time_txt)
         val repository = AppRepository()
         val factory = ViewModelFactory(repository)
         latitude= SharedPreferencesUtil().getLat(this).toString();
@@ -122,6 +123,50 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
         addressDeleteViewModel = ViewModelProvider(this, factory)[AddressDeleteViewModel::class.java]
 
         order_date = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+        rl_time.setOnClickListener {
+            val mcurrentTime = Calendar.getInstance()
+            var hour = mcurrentTime[Calendar.HOUR_OF_DAY]
+            val minute = mcurrentTime[Calendar.MINUTE]
+            val timePickerDialog = TimePickerDialog(this@CheckoutActivity,R.style.DialogTheme,
+                { view, hourOfDay, minute ->
+
+
+
+                   var hour = hourOfDay
+                    var minutes = minute
+                    var timeSet = ""
+                    if (hour > 12) {
+                        hour -= 12
+                        timeSet = "PM"
+                    } else if (hour === 0) {
+                        hour += 12
+                        timeSet = "AM"
+                    } else if (hour === 12) {
+                        timeSet = "PM"
+                    } else {
+                        timeSet = "AM"
+                    }
+
+                    var min: String? = ""
+                    if (minutes < 10) min = "0$minutes" else min = java.lang.String.valueOf(minutes)
+
+                    // Append in a StringBuilder
+
+                    // Append in a StringBuilder
+                    /* aTime = StringBuilder().append(hour).append(':')
+                        .append(min).append(" ").append(timeSet).toString()*/
+                    aTime =hour.toString() + ":"+min.toString()+ " "+timeSet
+                    time_txt.setText(aTime)
+                    order_time = aTime
+
+                  //  Toast.makeText(this@CheckoutActivity, delivery_date, Toast.LENGTH_SHORT).show()
+                },
+                hour,
+                minute,
+                false
+            )
+            timePickerDialog.show()
+        }
         add_address.setOnClickListener {
             startActivity(Intent(this,AddAddressActivity::class.java))
         }
@@ -151,6 +196,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
 
         submit_data.setOnClickListener {
             var product = items_list.toString()
+
             //var transactionId = UUID.randomUUID().toString();
             if(AddressAdapter.AddressId == "")
             {
@@ -161,6 +207,12 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
             {
                 Toast.makeText(this,"Please provide delivery date",Toast.LENGTH_SHORT).show()
             }
+            else if(order_time=="")
+
+            {
+                Toast.makeText(this,"Please provide delivery time",Toast.LENGTH_SHORT).show()
+            }
+
             else if(delivery_date=="")
 
             {
@@ -173,6 +225,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
 
                 if(payment_mode == "COD")
                 {
+                    delivery_date = delivery_date+" " +aTime
                     Log.d("product",product)
                 submitData(
                     userid,
@@ -187,6 +240,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
                 }
                 else if(payment_mode == "online")
                 {
+
                    startPayment()
                 }
                 else
@@ -212,6 +266,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
         }
         getCartItems(userid)
         rl_date.setOnClickListener {
+            var calender = Calendar.getInstance()
             val dateSetListener =
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     cal.set(Calendar.YEAR, year)
@@ -220,12 +275,15 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
                     updateDateInView()
                 }
 
-            DatePickerDialog(this,R.style.DialogTheme,
+           var datePicker= DatePickerDialog(this,R.style.DialogTheme,
                 dateSetListener,
                 // set DatePickerDialog to point to today's date when it loads up
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)).show()
+                cal.get(Calendar.DAY_OF_MONTH))
+            datePicker.getDatePicker().setMinDate(calender.getTimeInMillis());
+
+            datePicker.show()
         }
 
     }
@@ -288,7 +346,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
                             Toast.makeText(this,response.body()!!.message,Toast.LENGTH_SHORT).show()
-
+                                SharedPreferencesUtil().saveCartCount("0",this@CheckoutActivity)
                                 var i= Intent(this, SuccessPageActivity::class.java)
                                 startActivity(i)
                                 finish()
@@ -324,6 +382,8 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
         Log.e("Gvjdasdf",""+sdf.format(cal.time))
         date_txt.text = sdf.format(cal.time)
         delivery_date = date_txt.text.toString()
+        time_txt.text ="Select Time"
+        order_time=""
     }
 
     private fun getCartItems(userid: String) {
@@ -346,9 +406,14 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
                                         var hashMap: HashMap<String,String> = HashMap()
                                         hashMap.put("product_id", arry[i].PRODUCT_ID)
                                         hashMap.put("shop_id", arry[i].SHOP_ID)
+                                        hashMap.put("shop_name", arry[i].SHOP_NAME)
                                         hashMap.put("product_name", arry[i].PRODUCT_TITLE)
+                                        hashMap.put("product_image", arry[i].PRODUCT_IMAGE)
                                         hashMap.put("product_price", arry[i].PRODUCT_PRICE)
                                         hashMap.put("product_quantity", arry[i].PRODUCT_QUANTITY)
+                                        hashMap.put("quantity_amount", arry[i].QUANTITY_AMOUNT)
+                                        hashMap.put("base_price", arry[i].BASE_PRICE)
+                                        hashMap.put("base_amount", arry[i].BASE_AMOUNT)
                                         items_list.add(hashMap)
                                     }
 
@@ -465,6 +530,7 @@ class CheckoutActivity : AppCompatActivity(), PaymentResultListener,AddressInter
 
     override fun onPaymentSuccess(transactionid: String?) {
         var product = items_list.toString()
+        delivery_date = delivery_date+" " +aTime
         submitData(
             userid,
             product,
