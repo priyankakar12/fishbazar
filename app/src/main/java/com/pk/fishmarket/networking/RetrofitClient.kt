@@ -7,7 +7,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-   // private const val BASE_URL = "http://gastronics.hierodev.com/api/"
+       // private const val BASE_URL = "http://gastronics.hierodev.com/api/"
     private const val LIVE_URL = "http://freshfishbazar.com/Fishbazar/index.php/"
 
     private val retrofitClient: Retrofit.Builder by lazy {

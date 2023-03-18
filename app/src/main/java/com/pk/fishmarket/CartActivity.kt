@@ -37,6 +37,7 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
     lateinit var cart_emp:RelativeLayout
     lateinit var cart_ll_layout:RelativeLayout
     lateinit var proceed_ll:RelativeLayout
+    lateinit var upper_layer:RelativeLayout
     lateinit var tv_pro:ProgressBar
     var userid =""
     lateinit var getCartDetailsViewModel: GetCartDetailsViewModel
@@ -64,6 +65,7 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
         tv_pro=findViewById(R.id.tv_pro)
         proceed_ll=findViewById(R.id.proceed_ll)
         cart_emp=findViewById(R.id.cart_emp)
+        upper_layer=findViewById(R.id.upper_layer)
 
         latitude= SharedPreferencesUtil().getLat(this).toString();
         longitude= SharedPreferencesUtil().getLong(this).toString();
@@ -141,12 +143,14 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
                                 rec_cart.layoutManager = GridLayoutManager(this@CartActivity, 1)
 
                             } else {
+                                Log.d("deletedItem","cart is empty")
                                 var cart_total = ""
                                 SharedPreferencesUtil().saveCartCount(cart_total,this)
                                 tv_pro.visibility = View.GONE
                                 proceed_ll.visibility= View.GONE
                                 cart_ll_layout.visibility= View.GONE
                                 cart_emp.visibility= View.VISIBLE
+                                upper_layer.visibility= View.VISIBLE
                                 Toast.makeText(this, "cart is empty", Toast.LENGTH_SHORT)
                                     .show()
                             }
@@ -200,14 +204,18 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
                     is Resource.Success -> {
                         arrayList.clear()
                         response.data?.let { response ->
+                            tv_pro.visibility = View.GONE
+                            //main_ll.visibility= View.GONE
+                            cart_ll_layout.visibility= View.GONE
+                            proceed_ll.visibility= View.GONE
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
                                 getCartItems(userid)
-                                Toast.makeText(this,"Cart item has been deleted succesfully",Toast.LENGTH_LONG).show()
+                                //Toast.makeText(this,"Cart item has been deleted succesfully",Toast.LENGTH_LONG).show()
                             } else {
 
-                                Toast.makeText(this, "cart is empty", Toast.LENGTH_SHORT)
-                                    .show()
+                              /*  Toast.makeText(this, "cart is empty", Toast.LENGTH_SHORT)
+                                    .show()*/
                             }
 
                         }
@@ -247,6 +255,10 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
                     is Resource.Success -> {
                         arrayList.clear()
                         response.data?.let { response ->
+                            tv_pro.visibility = View.GONE
+                            main_ll.visibility= View.GONE
+                            cart_ll_layout.visibility= View.GONE
+                            proceed_ll.visibility= View.GONE
                             Log.d("response", response.toString())
                             if (response.body()!!.status == 200) {
                                 Log.d("productQty",productQuantity)
@@ -258,14 +270,13 @@ class CartActivity : AppCompatActivity(), AddToCartInterface {
                                 else
                                 {
                                     getCartItems(userid)
-                                    Toast.makeText(this,"Cart has been updated succesfully",Toast.LENGTH_LONG).show()
+                                   // Toast.makeText(this,"Cart has been updated succesfully",Toast.LENGTH_LONG).show()
 
                                 }
 
                                          } else {
 
-                                Toast.makeText(this, "cart is empty", Toast.LENGTH_SHORT)
-                                    .show()
+                              //  Toast.makeText(this, "cart is empty", Toast.LENGTH_SHORT) .show()
                             }
 
                         }

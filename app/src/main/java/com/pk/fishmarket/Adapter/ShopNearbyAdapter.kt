@@ -132,11 +132,11 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
                 val actualPrice: String = java.lang.String.valueOf(
                     modelList[position].PRODUCT_PRICE
                 )
-                val actprice = actualPrice.toFloat()
+                /*val actprice = actualPrice.toFloat()
                 var price1 = 0f
                 price1 = actprice * count
                 val priceActual = String.format("%.0f", price1)
-                holder.price.setText(priceActual)
+                holder.price.setText(priceActual)*/
                 var quantity_amount = ""
 
                 if(holder.fish_weight.text.toString() == "1000g")

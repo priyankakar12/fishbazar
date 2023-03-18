@@ -53,7 +53,14 @@ class CartAdapter (private val context: Context, private val modelList: ArrayLis
         holder.price.text = modelList[position].PRODUCT_PRICE
         Log.d("gvuvu",modelList[position].PRODUCT_PRICE)
         holder.img_delete.setOnClickListener{
-            addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),holder.price.text.toString(),"4",modelList[position].PRODUCT_QUANTITY,"","")
+            try{
+                addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),holder.price.text.toString(),"4",modelList[position].PRODUCT_QUANTITY,"","")
+
+            }
+            catch(e : Exception)
+            {
+
+            }
 
         }
 
