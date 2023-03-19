@@ -2,49 +2,201 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@drawable/shop_grey_layout">
+    android:background="@drawable/shop_grey_layout"
+    android:padding="5dp"
+    android:layout_marginBottom="7dp"
+    android:id="@+id/main_ll"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/image_ll"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_centerVertical="true">
-        <TextView
-            android:id="@+id/product_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Katla"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/semibold_mont"
-            />
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/search_box">
+        <androidx.cardview.widget.CardView
 
-
-        <TextView
-
-            android:id="@+id/price"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Rs. 750"
-            android:textSize="16sp"
-            android:textColor="@color/red"
-            android:fontFamily="@font/semibold_mont"
-            android:layout_alignParentRight="true"
-            />
-        <TextView
-            android:layout_below="@+id/product_name"
-            android:id="@+id/qty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Qty:2"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/semibold_mont"
-            />
+            app:cardCornerRadius="10dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp">
+
+            <ImageView
+                android:id="@+id/product_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/demo_image" />
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/medium_mont"
+        android:text="Anu Meat Shop"
+        android:textColor="@color/black" />
+    <TextView
+        android:id="@+id/shop_nm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/bold_mont"
+        android:layout_below="@+id/shop_name"
+        android:text="FRESH FISH BAZAAR"
+        android:textColor="@color/blue" />
 
 
+    <RelativeLayout
+        android:id="@+id/amt_ll"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/shop_nm"
+
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="9dp"
+
+        >
+
+        <TextView
+            android:id="@+id/fish_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+
+            android:fontFamily="@font/medium_mont"
+            android:text="1000g"
+            android:textColor="@color/black" />
+
+
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/currencyicon"
+        android:layout_below="@+id/amt_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:fontFamily="@font/medium_mont"
+        android:text="@string/currency_icon"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/amt_ll"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/currencyicon"
+        android:fontFamily="@font/semibold_mont"
+        android:text="150"
+        android:textColor="@color/black"
+        android:layout_marginBottom="5dp"/>
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/add_ll"
+        android:layout_width="95dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/image_ll"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="-20dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/redbox">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/medium_mont"
+            android:text="ADD"
+            android:textColor="@color/white" />
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/quantity_layout"
+        android:layout_width="95dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/image_ll"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="-20dp"
+        android:layout_marginRight="9dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/redbox">
+
+        <RelativeLayout
+            android:id="@+id/ll_minus"
+            android:layout_toLeftOf="@+id/ll_qty"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/minus" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/ll_qty"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ll_add"
+            android:layout_toRightOf="@+id/ll_qty"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/plus" />
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

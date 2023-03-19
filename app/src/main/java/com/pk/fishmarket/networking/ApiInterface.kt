@@ -101,7 +101,7 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("Shop_user/cart_delete")
     fun deletecart(
-        @Field("productid") productid: String,
+        @Field("pkid") productid: String,
         @Field("userid") userid: String
 
 

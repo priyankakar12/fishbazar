@@ -47,14 +47,14 @@ class CartAdapter (private val context: Context, private val modelList: ArrayLis
 
     override fun onBindViewHolder(holder: CartAdapter.ViewHolder, position: Int) {
 
-        holder.fish_weight.text = modelList[position].BASE_AMOUNT+" gms" +" x "+modelList[position].PRODUCT_QUANTITY
+        holder.fish_weight.text = modelList[position].QUANTITY_AMOUNT+" gms" +" x "+modelList[position].PRODUCT_QUANTITY
         holder.shop_name.text = modelList[position].PRODUCT_TITLE
         holder.qty.text =  modelList[position].PRODUCT_QUANTITY
         holder.price.text = modelList[position].PRODUCT_PRICE
         Log.d("gvuvu",modelList[position].PRODUCT_PRICE)
         holder.img_delete.setOnClickListener{
             try{
-                addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),holder.price.text.toString(),"4",modelList[position].PRODUCT_QUANTITY,"","")
+                addToCartInterface.updateCart(modelList.get(position).PKID,"0",holder.qty.text.toString(),holder.price.text.toString(),"4",modelList[position].PRODUCT_QUANTITY,"","")
 
             }
             catch(e : Exception)
@@ -129,7 +129,7 @@ class CartAdapter (private val context: Context, private val modelList: ArrayLis
             }
             else
             {
-                addToCartInterface.updateCart(modelList.get(position).PRODUCT_ID,"0",holder.qty.text.toString(),holder.price.text.toString(),"4",modelList[position].PRODUCT_QUANTITY,"","")
+                addToCartInterface.updateCart(modelList.get(position).PKID,"0",holder.qty.text.toString(),holder.price.text.toString(),"4",modelList[position].PRODUCT_QUANTITY,"","")
 
             }
         }

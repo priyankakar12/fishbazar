@@ -222,6 +222,7 @@ class ShopNearbyAdapter(private val context: Context, private val modelList: Arr
             tv.setOnClickListener {
                 var actualPrice = holder.price.text
                 holder.fish_weight.text = weightArr.get(finalI)
+                holder.qty.text = "0"
                 if(holder.fish_weight.text.equals("250g"))
                 {
                     var priceNew = productPrice.toString().toInt()

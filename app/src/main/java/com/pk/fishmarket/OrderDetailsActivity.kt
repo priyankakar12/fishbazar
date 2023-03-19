@@ -137,6 +137,8 @@ class OrderDetailsActivity : AppCompatActivity() {
                                 var orderStatus = response.body()!!.ORDER_DETAILS[0].ORDER_STATUS
                                 try {
                                     val date = format.parse(deliveryDate)
+                                    Log.d("date",date.toString())
+                                    Log.d("date",deliveryDate.toString())
 
 
                                     if(date.compareTo(dateCompare) < 0 || orderStatus == "CANCEL")

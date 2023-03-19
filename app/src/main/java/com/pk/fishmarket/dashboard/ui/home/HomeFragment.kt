@@ -368,6 +368,13 @@ class HomeFragment : Fragment(),AddToCartInterface {
         base_amount:String,
         base_price:String
     ) {
+        Log.d("productid",productid);
+        Log.d("shopid",shopid);
+        Log.d("product_quantity",product_quantity);
+        Log.d("price",price);
+        Log.d("quantity_amount",quantity_amount);
+        Log.d("base_amount",base_amount);
+        Log.d("base_price",base_price);
         addToCartViewModel.AddToCartItems(productid,shopid,product_quantity,userid,price,status,quantity_amount,base_amount,base_price)
         addToCartViewModel.response.observe(this) { event ->
             event.getContentIfNotHandled()?.let { response ->
