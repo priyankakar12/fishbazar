@@ -116,7 +116,7 @@ class HomeFragment : Fragment(),AddToCartInterface {
                 }
             }
         })
-        binding.cartCount.setOnClickListener {
+        binding.cartLl.setOnClickListener {
             startActivity(Intent(requireContext(), CartActivity::class.java))
         }
         return root

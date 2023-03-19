@@ -10,8 +10,8 @@ android {
         applicationId "com.pk.fishmarket"
         minSdk 22
         targetSdk 32
-        versionCode 13
-        versionName "1.0.14"
+        versionCode 15
+        versionName "1.0.16"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

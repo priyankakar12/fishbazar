@@ -216,7 +216,7 @@
             android:layout_below="@+id/donthav_txt"
             android:layout_marginTop="7dp"
             android:fontFamily="@font/semibold_mont"
-            android:text="Sign Up"
+            android:text="Create Account"
             android:textAlignment="center"
             android:textColor="@color/lighblue"
             android:textSize="16sp" />

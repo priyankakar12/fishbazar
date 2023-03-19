@@ -43,6 +43,16 @@
         android:fontFamily="@font/medium_mont"
         android:text="Anu Meat Shop"
         android:textColor="@color/black" />
+    <TextView
+        android:id="@+id/shop_nm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/bold_mont"
+        android:layout_below="@+id/shop_name"
+        android:text="FRESH FISH BAZAAR"
+        android:textColor="@color/blue" />
 
 
     <TextView
@@ -52,7 +62,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/medium_mont"
-        android:layout_below="@+id/shop_name"
+        android:layout_below="@+id/shop_nm"
         android:text="Anu Meat Shop"
         android:textColor="@color/blue" />
     <RelativeLayout
