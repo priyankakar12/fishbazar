@@ -240,6 +240,7 @@
 
         </RelativeLayout>
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/password_ll"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -300,6 +301,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/con_password_ll"
             android:layout_width="match_parent"
             android:layout_height="45dp"

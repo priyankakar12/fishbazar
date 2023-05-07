@@ -10,11 +10,26 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface ApiInterface {
-    @FormUrlEncoded
+   /* @FormUrlEncoded
     @POST("Shop_user/login")
-    fun userLogin(@Field("phonenumber") phonenumber: String,@Field("user_pass") user_pass:String): Single<Response<LoginResponseModel>>
+    fun userLogin(@Field("phonenumber") phonenumber: String): Single<Response<LoginResponseModel>>*/
 
     @FormUrlEncoded
+        @POST("Shop_user/login")
+        fun userLogin(@Field("phonenumber") phonenumber: String,@Field("user_pass") user_pass:String): Single<Response<LoginResponseModel>>
+
+  /*  @FormUrlEncoded
+    @POST("Shop_user/user_signup")
+    fun userRegister(
+        @Field("phonenumber") phonenumber: String,
+        @Field("username") username: String,
+        @Field("email") email: String,
+        @Field("firstname") firstname: String,
+        @Field("lastname") lastname: String
+
+
+    ): Single<Response<CartUpdateResponseModel>>*/
+  @FormUrlEncoded
     @POST("Shop_user/user_signup")
     fun userRegister(
         @Field("phonenumber") phonenumber: String,
@@ -27,7 +42,6 @@ interface ApiInterface {
 
 
     ): Single<Response<CartUpdateResponseModel>>
-
     @FormUrlEncoded
     @POST("Shop_user/otp_verify")
     fun userOtpVerify(@Field("phone_number") phone_number: String,@Field("otp") otp:String): Single<Response<OtpResponseModel>>

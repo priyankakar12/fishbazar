@@ -66,10 +66,10 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
                   {
                       Toast.makeText(this, "Email cannot be empty", Toast.LENGTH_SHORT).show()
                   }
-               else if(password == "")
+             /*  else if(password == "")
                   {
                       Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show()
-                  }
+                  }*/
                       else
                   {
                       if (InternetConnection.isConnected(this)) {

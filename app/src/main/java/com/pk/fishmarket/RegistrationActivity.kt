@@ -85,8 +85,11 @@ class RegistrationActivity : AppCompatActivity() {
         var username = first_name_edt.text.toString()+" "+last_name_edt.text.toString()
 
         var email = email_edt.text.toString()
-        var user_pass = password_edt.text.toString()
-        var user_con_pass = conpassword_edt.text.toString()
+//        var user_pass = password_edt.text.toString()
+//        var user_con_pass = conpassword_edt.text.toString()
+            var user_pass = ""
+        var user_con_pass = ""
+
         var firstname = first_name_edt.text.toString()
         var lastname = last_name_edt.text.toString()
             if(phonenumber =="")
@@ -106,14 +109,14 @@ class RegistrationActivity : AppCompatActivity() {
             {
                 Toast.makeText(this, "last name cannot be blank", Toast.LENGTH_SHORT).show()
             }
-            else if(password_edt.text.toString() == "")
+          /*  else if(password_edt.text.toString() == "")
             {
                 Toast.makeText(this, "password cannot be blank", Toast.LENGTH_SHORT).show()
             }
             else if(conpassword_edt.text.toString() == "")
             {
                 Toast.makeText(this, " confirm password cannot be blank", Toast.LENGTH_SHORT).show()
-            }
+            }*/
 
             else
             {
