@@ -92,6 +92,7 @@ class OrderDetailsActivity : AppCompatActivity() {
                                 Toast.makeText(this, "Order has been cancelled", Toast.LENGTH_SHORT).show()
 
                             } else {
+                                Toast.makeText(this, "Something went cancelled", Toast.LENGTH_SHORT).show()
 
                             }
 

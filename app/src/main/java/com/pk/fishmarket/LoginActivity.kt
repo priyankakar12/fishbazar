@@ -1,6 +1,7 @@
 package com.pk.fishmarket
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -27,6 +28,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     lateinit var send_otp_txt : TextView
     lateinit var hideShowPwd : TextView
     lateinit var sign_in : TextView
+    lateinit var terms : TextView
     private lateinit var loginViewModel: LoginViewModel
     var cancel = false
     var focusView: View? = null
@@ -44,6 +46,7 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         send_otp_txt =findViewById(R.id.send_otp_txt);
         sign_in =findViewById(R.id.sign_in);
         hideShowPwd =findViewById(R.id.hideShowPwd);
+        terms =findViewById(R.id.terms);
         val repository = AppRepository()
         val factory = ViewModelFactory(repository)
         loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
@@ -51,6 +54,12 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
         hideShowPwd.setOnClickListener(this)
         sign_in.setOnClickListener {
             startActivity(Intent(this@LoginActivity,RegistrationActivity::class.java))
+        }
+        terms.setOnClickListener {
+            val url = "https://merchant.razorpay.com/policy/LSwZTyo0VrvLAf/contact_us"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
         }
     }
 

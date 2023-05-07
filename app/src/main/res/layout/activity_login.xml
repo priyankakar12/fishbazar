@@ -8,6 +8,7 @@
     android:focusableInTouchMode="true"
     android:background="@drawable/login_bg"
     android:id="@+id/main_ll"
+    android:layout_margin="10dp"
     tools:context=".LoginActivity">
     <RelativeLayout
         android:id="@+id/upper_layer"
@@ -233,6 +234,17 @@
 
 
     </RelativeLayout>
-
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:id="@+id/terms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/semibold_mont"
+        android:text="Terms &amp; Conditions"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
 </RelativeLayout>
